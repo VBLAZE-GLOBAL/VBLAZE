@@ -1,76 +1,66 @@
-"use client"; // This tells Next.js that this component should be rendered on the client side.
+"use client";
 
 import React, { useState } from "react";
 import styles from "./Chatbot.module.css"; // For styling, we will use CSS Modules
 
+// Define the possible option types
+type OptionType = "Developer" | "Marketing Team";
+
+// Define the component
 const Chatbot = () => {
-  const [chatVisible, setChatVisible] = useState(false);
-  const [message, setMessage] = useState<string>("");
-  const [optionsVisible, setOptionsVisible] = useState<boolean>(true);
+  // State to track the selected option
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
-  const toggleChatbot = () => {
-    setChatVisible((prev) => !prev);
-  };
-
-  const selectOption = (option: "developers" | "marketing") => {
-    let botMessage = "";
-
-    if (option === "developers") {
-      botMessage =
-        'Thank you for contacting the Developers. You can reach us on WhatsApp: <a href="https://wa.me/+9718291800" target="_blank">Chat with Developer</a>';
-    } else if (option === "marketing") {
-      botMessage =
-        'Thank you for contacting the Marketing Team. You can reach us on WhatsApp: <a href="https://wa.me/+916238409990" target="_blank">Chat with Marketing Team</a>';
-    }
-
-    setMessage(botMessage);
-    setOptionsVisible(false);
+  // Handle option selection
+  const handleOptionSelect = (option: OptionType) => {
+    setSelectedOption(option);
   };
 
   return (
-    <>
-      {/* Floating Action Button */}
-      <div className={styles.chatbotFab} onClick={toggleChatbot}>
-        <img
-          src="https://i.postimg.cc/RZqT3ybd/2-Q-removebg-preview.png"
-          alt="Chatbot"
-        />
+    <div className={styles.chatbotContainer}>
+      <div className={styles.fabContainer}>
+        <button
+          className={styles.fab}
+          aria-label="Chatbot"
+          onClick={() => setSelectedOption(null)}
+        >
+          <img
+            src="https://i.postimg.cc/RZqT3ybd/2-Q-removebg-preview.png"
+            alt="Chatbot"
+          />
+        </button>
       </div>
 
-      {/* Chatbot Window */}
-      {chatVisible && (
-        <div className={styles.chatbotWindow}>
-          <div className={styles.chatbotHeader}>
-            <h4>VbAi - Assistant</h4>
-            <span className={styles.closeBtn} onClick={toggleChatbot}>
-              X
-            </span>
-          </div>
-          <div className={styles.chatbotBody}>
-            <div className={styles.botMessage}>
-              <p>Hello There, How can I help you?</p>
-              <br></br>
-              {optionsVisible && (
-                <div className={styles.options}>
-                  <button onClick={() => selectOption("developers")}>
-                    Contact Developers
-                  </button>
-                  <button onClick={() => selectOption("marketing")}>
-                    Contact Marketing Team
-                  </button>
-                </div>
-              )}
-            </div>
-
-            {message && (
-              <div className={styles.botMessage}>
-                <p dangerouslySetInnerHTML={{ __html: message }}></p>
-              </div>
-            )}
-          </div>
+      {/* Chatbot conversation */}
+      <div className={styles.chatbox}>
+        <div className={styles.botMessage}>
+          <p>Hello There, How can I help you?</p>
         </div>
-      )}
-    </>
+
+        {/* Show options for the user */}
+        {selectedOption === null ? (
+          <div className={styles.optionsContainer}>
+            <button onClick={() => handleOptionSelect("Developer")}>
+              Contact Developers
+            </button>
+            <button onClick={() => handleOptionSelect("Marketing Team")}>
+              Contact Marketing Team
+            </button>
+          </div>
+        ) : (
+          <div className={styles.botMessage}>
+            <p>Thank you for reaching out to the {selectedOption}.</p>
+            <a
+              href={`https://wa.me/1234567890?text=Hello, I want to contact the ${selectedOption}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              WhatsApp {selectedOption}
+            </a>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 

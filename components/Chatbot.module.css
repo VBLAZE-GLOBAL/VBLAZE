@@ -1,102 +1,83 @@
-/* Chatbot Floating Action Button */
-.chatbotFab {
+.chatbotContainer {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #ffffff; /* Purple background */
-  border-radius: 50%;
-  padding: 15px; /* Reduce the size */
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  animation: blink 2s infinite; /* Add animation */
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  z-index: 1000;
 }
 
-.chatbotFab img {
-  width: 30px; /* Adjusted size */
-  height: 30px;
+.fabContainer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  animation: blink 1s infinite alternate;
 }
 
-/* Blink animation */
-@keyframes blink {
-  0%,
-  100% {
-    transform: scale(1); /* Original size */
-  }
-  50% {
-    transform: scale(1.1); /* Slightly larger */
-  }
-}
-
-/* Chatbot Window */
-.chatbotWindow {
-  position: fixed;
-  bottom: 80px;
-  right: 20px;
-  width: 350px;
-  background-color: #3f51b5; /* Blue background */
+.fab {
+  background-color: #8a2be2; /* Purple background */
   color: white;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  z-index: 9999;
-}
-
-.chatbotHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.chatbotHeader h4 {
-  font-size: 18px;
-  font-weight: 600;
-  margin: 0;
-}
-
-.closeBtn {
-  background: transparent;
   border: none;
-  color: white;
-  font-size: 18px;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 30px;
   cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
 }
 
-/* Chatbot Body */
-.chatbotBody {
-  margin-top: 10px;
+.fab:hover {
+  transform: scale(1.1);
+}
+
+.chatbox {
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  background-color: white;
+  width: 300px;
+  max-height: 400px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .botMessage {
-  margin-bottom: 15px;
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.options button {
-  background-color: #fff;
-  color: #3f51b5; /* Blue text color */
-  border: none;
+  background-color: #f1f1f1;
   padding: 10px;
-  margin: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  border-radius: 8px;
 }
 
-.options button:hover {
-  background-color: #3f51b5; /* Blue background on hover */
-  color: white; /* White text on hover */
-}
-
-.options {
+.optionsContainer {
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
-.options button:first-child {
-  margin-top: 0;
+.optionsContainer button {
+  background-color: #4caf50; /* Green background for options */
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.optionsContainer button:hover {
+  background-color: #45a049;
+}
+
+@keyframes blink {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
