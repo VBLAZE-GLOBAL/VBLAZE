@@ -41,7 +41,7 @@ const Chatbot = () => {
       {chatVisible && (
         <div className={styles.chatbotWindow}>
           <div className={styles.chatbotHeader}>
-            <h4>VbAi - Bot</h4>
+            <h4>VbAi - Assistant</h4>
             <span className={styles.closeBtn} onClick={toggleChatbot}>
               X
             </span>
@@ -49,6 +49,7 @@ const Chatbot = () => {
           <div className={styles.chatbotBody}>
             <div className={styles.botMessage}>
               <p>Hello There, How can I help you?</p>
+              <br></br>
               {optionsVisible && (
                 <div className={styles.options}>
                   <button onClick={() => selectOption("developers")}>
