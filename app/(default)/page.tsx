@@ -20,7 +20,7 @@ export default function Home() {
       <Features />
       {/* <Testimonials /> */}
       <Cta />
-      <Chatbot />
+      {/* <Chatbot /> */}
     </>
   );
 }
