@@ -21,8 +21,7 @@ export default function Workflows() {
             </h2>
             <p className="text-lg text-indigo-200/65">
               We believe that every great product starts with a vision and is
-              realized through careful planning, design, and execution. Here’s
-              how we partner with you to turn your ideas into reality.
+              realized through careful planning, design, and execution.
             </p>
           </div>
           {/* Spotlight items */}
