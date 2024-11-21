@@ -17,10 +17,10 @@ const Chatbot = () => {
 
     if (option === "developers") {
       botMessage =
-        'Thank you for contacting the Developers. You can reach us on WhatsApp: <a href="https://wa.me/1234567890" target="_blank">Chat with Developer</a>';
+        'Thank you for contacting the Developers. You can reach us on WhatsApp: <a href="https://wa.me/+9718291800" target="_blank">Chat with Developer</a>';
     } else if (option === "marketing") {
       botMessage =
-        'Thank you for contacting the Marketing Team. You can reach us on WhatsApp: <a href="https://wa.me/0987654321" target="_blank">Chat with Marketing Team</a>';
+        'Thank you for contacting the Marketing Team. You can reach us on WhatsApp: <a href="https://wa.me/+916238409990" target="_blank">Chat with Marketing Team</a>';
     }
 
     setMessage(botMessage);
