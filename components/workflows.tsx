@@ -67,8 +67,8 @@ export default function Workflows() {
                     </span>
                   </div>
                   <p className="text-indigo-200/65">
-                    Streamline the product development flow with a content
-                    platform that's aligned across specs and insights.
+                    Incorporating agile principles such as sprints and kanban
+                    boards for task prioritization and tracking.
                   </p>
                 </div>
               </div>
@@ -114,8 +114,8 @@ export default function Workflows() {
                     </span>
                   </div>
                   <p className="text-indigo-200/65">
-                    Streamline the product development flow with a content
-                    platform that's aligned across specs and insights.
+                    Hosting products on scalable cloud platforms, which allows
+                    teams to increase infrastructure capacity.
                   </p>
                 </div>
               </div>
@@ -161,8 +161,8 @@ export default function Workflows() {
                     </span>
                   </div>
                   <p className="text-indigo-200/65">
-                    Streamline the product development flow with a content
-                    platform that's aligned across specs and insights.
+                    These pipelines can be aligned with the agile methodology,
+                    helping teams manage tasks such as continuous integration.
                   </p>
                 </div>
               </div>
