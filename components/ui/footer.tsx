@@ -205,11 +205,11 @@ export default function Footer() {
             </div>
             <div className="text-sm">
               <p className="mb-3 text-indigo-200/65">
-                © Cruip.com
+                © vblaze.org
                 <span className="text-gray-700"> · </span>
                 <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  href="#0"
+                  href="https://terms.vblaze.org/"
                 >
                   Terms
                 </a>
@@ -218,7 +218,7 @@ export default function Footer() {
                 <li>
                   <a
                     className="flex items-center justify-center text-indigo-500 transition hover:text-indigo-400"
-                    href="#0"
+                    href="https://x.com/vblaze_global"
                     aria-label="Twitter"
                   >
                     <svg
@@ -233,7 +233,7 @@ export default function Footer() {
                 <li>
                   <a
                     className="flex items-center justify-center text-indigo-500 transition hover:text-indigo-400"
-                    href="#0"
+                    href="https://medium.com/@vblaze.global"
                     aria-label="Medium"
                   >
                     <svg
@@ -248,7 +248,7 @@ export default function Footer() {
                 <li>
                   <a
                     className="flex items-center justify-center text-indigo-500 transition hover:text-indigo-400"
-                    href="#0"
+                    href="https://github.com/VBLAZE-GLOBAL/"
                     aria-label="Github"
                   >
                     <svg

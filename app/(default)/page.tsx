@@ -1,6 +1,6 @@
 export const metadata = {
-  title: "Home - Open PRO",
-  description: "Page description",
+  title: "VBLAZE GLOBAL",
+  description: "INNOVATE. CODE. DELIVER",
 };
 
 import PageIllustration from "@/components/page-illustration";
