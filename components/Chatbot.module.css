@@ -100,3 +100,13 @@
 .options button:first-child {
   margin-top: 0;
 }
+
+/* Chatbot.module.css */
+.botMessage a {
+  color: #00ff62; /* Replace with your desired color */
+  text-decoration: none; /* Optional: to remove underline */
+}
+
+.botMessage a:hover {
+  color: #00b365; /* Optional: a different color on hover */
+}
