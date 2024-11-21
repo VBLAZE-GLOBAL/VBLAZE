@@ -12,7 +12,7 @@ const Chatbot = () => {
     setChatVisible((prev) => !prev);
   };
 
-  const selectOption = (option: string) => {
+  const selectOption = (option: "developers" | "marketing") => {
     let botMessage = "";
 
     if (option === "developers") {
