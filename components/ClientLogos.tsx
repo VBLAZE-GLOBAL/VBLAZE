@@ -31,29 +31,37 @@ export default function OurClients() {
             {/* Client 1 */}
             <a
               className="group/card relative h-full overflow-hidden rounded-2xl bg-gray-800 p-px before:pointer-events-none before:absolute before:-left-40 before:-top-40 before:z-10 before:h-80 before:w-80 before:translate-x-[var(--mouse-x)] before:translate-y-[var(--mouse-y)] before:rounded-full before:bg-indigo-500/80 before:opacity-0 before:blur-3xl before:transition-opacity before:duration-500 after:pointer-events-none after:absolute after:-left-48 after:-top-48 after:z-30 after:h-64 after:w-64 after:translate-x-[var(--mouse-x)] after:translate-y-[var(--mouse-y)] after:rounded-full after:bg-indigo-500 after:opacity-0 after:blur-3xl after:transition-opacity after:duration-500 after:hover:opacity-20 before:group-hover:opacity-100"
-              href="https://itsetupdubai.com/"
+              href="https://www.jovoyparis.com/"
             >
               <div className="relative z-20 h-full overflow-hidden rounded-[inherit] bg-gray-950 after:absolute after:inset-0 after:bg-gradient-to-br after:from-gray-900/50 after:via-gray-800/25 after:to-gray-900/50">
                 {/* Image */}
-                <Image
-                  className="inline-flex"
-                  src={ClientImg01}
-                  width={350}
-                  height={288}
-                  alt="Client 01"
-                />
+                <div className="relative">
+                  <Image
+                    className="inline-flex"
+                    src={ClientImg01}
+                    width={350}
+                    height={288}
+                    alt="Client 01"
+                  />
+                  {/* Client name on hover */}
+                  <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="text-white text-xl font-semibold">
+                      JOVOY
+                    </span>
+                  </div>
+                </div>
                 {/* Content */}
                 <div className="p-6">
                   <div className="mb-3">
                     <span className="btn-sm relative rounded-full bg-gray-800/40 px-2.5 py-0.5 text-xs font-normal before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_bottom,theme(colors.gray.700/.15),theme(colors.gray.700/.5))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-gray-800/60">
                       <span className="bg-gradient-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
-                        Innovative Solutions
+                        Exquisite Fragrances
                       </span>
                     </span>
                   </div>
                   <p className="text-indigo-200/65">
-                    Delivering cutting-edge solutions that drive success for our
-                    partners.
+                    Crafting luxurious scents that elevate your experience and
+                    create lasting impressions.
                   </p>
                 </div>
               </div>
@@ -61,29 +69,37 @@ export default function OurClients() {
             {/* Client 2 */}
             <a
               className="group/card relative h-full overflow-hidden rounded-2xl bg-gray-800 p-px before:pointer-events-none before:absolute before:-left-40 before:-top-40 before:z-10 before:h-80 before:w-80 before:translate-x-[var(--mouse-x)] before:translate-y-[var(--mouse-y)] before:rounded-full before:bg-indigo-500/80 before:opacity-0 before:blur-3xl before:transition-opacity before:duration-500 after:pointer-events-none after:absolute after:-left-48 after:-top-48 after:z-30 after:h-64 after:w-64 after:translate-x-[var(--mouse-x)] after:translate-y-[var(--mouse-y)] after:rounded-full after:bg-indigo-500 after:opacity-0 after:blur-3xl after:transition-opacity after:duration-500 after:hover:opacity-20 before:group-hover:opacity-100"
-              href="https://rhms.online/"
+              href="https://stthomaskannur.ac.in/fiesta23/"
             >
               <div className="relative z-20 h-full overflow-hidden rounded-[inherit] bg-gray-950 after:absolute after:inset-0 after:bg-gradient-to-br after:from-gray-900/50 after:via-gray-800/25 after:to-gray-900/50">
                 {/* Image */}
-                <Image
-                  className="inline-flex"
-                  src={ClientImg02}
-                  width={350}
-                  height={288}
-                  alt="Client 02"
-                />
+                <div className="relative">
+                  <Image
+                    className="inline-flex"
+                    src={ClientImg02}
+                    width={350}
+                    height={288}
+                    alt="Client 02"
+                  />
+                  {/* Client name on hover */}
+                  <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="text-white text-xl font-semibold">
+                      FIESTA
+                    </span>
+                  </div>
+                </div>
                 {/* Content */}
                 <div className="p-6">
                   <div className="mb-3">
                     <span className="btn-sm relative rounded-full bg-gray-800/40 px-2.5 py-0.5 text-xs font-normal before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_bottom,theme(colors.gray.700/.15),theme(colors.gray.700/.5))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-gray-800/60">
                       <span className="bg-gradient-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
-                        Powerful Partnerships
+                        Seamless Event
                       </span>
                     </span>
                   </div>
                   <p className="text-indigo-200/65">
-                    Building meaningful relationships with clients that last and
-                    thrive.
+                    Designing and managing unforgettable events that leave a
+                    lasting impact on every guest.
                   </p>
                 </div>
               </div>
@@ -91,88 +107,115 @@ export default function OurClients() {
             {/* Client 3 */}
             <a
               className="group/card relative h-full overflow-hidden rounded-2xl bg-gray-800 p-px before:pointer-events-none before:absolute before:-left-40 before:-top-40 before:z-10 before:h-80 before:w-80 before:translate-x-[var(--mouse-x)] before:translate-y-[var(--mouse-y)] before:rounded-full before:bg-indigo-500/80 before:opacity-0 before:blur-3xl before:transition-opacity before:duration-500 after:pointer-events-none after:absolute after:-left-48 after:-top-48 after:z-30 after:h-64 after:w-64 after:translate-x-[var(--mouse-x)] after:translate-y-[var(--mouse-y)] after:rounded-full after:bg-indigo-500 after:opacity-0 after:blur-3xl after:transition-opacity after:duration-500 after:hover:opacity-20 before:group-hover:opacity-100"
-              href="#0"
+              href="https://royalboutique.arkanet.ae/"
             >
               <div className="relative z-20 h-full overflow-hidden rounded-[inherit] bg-gray-950 after:absolute after:inset-0 after:bg-gradient-to-br after:from-gray-900/50 after:via-gray-800/25 after:to-gray-900/50">
                 {/* Image */}
-                <Image
-                  className="inline-flex"
-                  src={ClientImg03}
-                  width={350}
-                  height={288}
-                  alt="Client 03"
-                />
+                <div className="relative">
+                  <Image
+                    className="inline-flex"
+                    src={ClientImg03}
+                    width={350}
+                    height={288}
+                    alt="Client 03"
+                  />
+                  {/* Client name on hover */}
+                  <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="text-white text-xl font-semibold">
+                      R.B.P
+                    </span>
+                  </div>
+                </div>
                 {/* Content */}
                 <div className="p-6">
                   <div className="mb-3">
                     <span className="btn-sm relative rounded-full bg-gray-800/40 px-2.5 py-0.5 text-xs font-normal before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_bottom,theme(colors.gray.700/.15),theme(colors.gray.700/.5))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-gray-800/60">
                       <span className="bg-gradient-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
-                        Future-focused
+                        Luxury Redefined
                       </span>
                     </span>
                   </div>
                   <p className="text-indigo-200/65">
-                    Shaping the future of industries through innovation and
-                    collaboration.
+                    Discover unparalleled craftsmanship and premium designs,
+                    offering an exclusive shopping experience.
                   </p>
                 </div>
               </div>
             </a>
+            {/* Additional clients */}
+            {/* Client 3 */}
+            <a
+              className="group/card relative h-full overflow-hidden rounded-2xl bg-gray-800 p-px before:pointer-events-none before:absolute before:-left-40 before:-top-40 before:z-10 before:h-80 before:w-80 before:translate-x-[var(--mouse-x)] before:translate-y-[var(--mouse-y)] before:rounded-full before:bg-indigo-500/80 before:opacity-0 before:blur-3xl before:transition-opacity before:duration-500 after:pointer-events-none after:absolute after:-left-48 after:-top-48 after:z-30 after:h-64 after:w-64 after:translate-x-[var(--mouse-x)] after:translate-y-[var(--mouse-y)] after:rounded-full after:bg-indigo-500 after:opacity-0 after:blur-3xl after:transition-opacity after:duration-500 after:hover:opacity-20 before:group-hover:opacity-100"
+              href="https://savvypool.com/"
+            >
+              <div className="relative z-20 h-full overflow-hidden rounded-[inherit] bg-gray-950 after:absolute after:inset-0 after:bg-gradient-to-br after:from-gray-900/50 after:via-gray-800/25 after:to-gray-900/50">
+                {/* Image */}
+                <div className="relative flex justify-center items-center">
+                  <Image
+                    className="inline-flex"
+                    src={ClientImg04}
+                    width={350}
+                    height={288}
+                    alt="Client 03"
+                  />
+                  {/* Client name on hover */}
+                  <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="text-white text-xl font-semibold">
+                      TRADING
+                    </span>
+                  </div>
+                </div>
+                {/* Content */}
+                <div className="p-6">
+                  <div className="mb-3">
+                    <span className="btn-sm relative rounded-full bg-gray-800/40 px-2.5 py-0.5 text-xs font-normal before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_bottom,theme(colors.gray.700/.15),theme(colors.gray.700/.5))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-gray-800/60">
+                      <span className="bg-gradient-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
+                        Effortless Trading
+                      </span>
+                    </span>
+                  </div>
+                  <p className="text-indigo-200/65">
+                    Empowering investors with intuitive platforms and expert
+                    insights that simplify complex markets.
+                  </p>
+                </div>
+              </div>
+            </a>
+
             {/* Client 4 */}
             <a
               className="group/card relative h-full overflow-hidden rounded-2xl bg-gray-800 p-px before:pointer-events-none before:absolute before:-left-40 before:-top-40 before:z-10 before:h-80 before:w-80 before:translate-x-[var(--mouse-x)] before:translate-y-[var(--mouse-y)] before:rounded-full before:bg-indigo-500/80 before:opacity-0 before:blur-3xl before:transition-opacity before:duration-500 after:pointer-events-none after:absolute after:-left-48 after:-top-48 after:z-30 after:h-64 after:w-64 after:translate-x-[var(--mouse-x)] after:translate-y-[var(--mouse-y)] after:rounded-full after:bg-indigo-500 after:opacity-0 after:blur-3xl after:transition-opacity after:duration-500 after:hover:opacity-20 before:group-hover:opacity-100"
-              href="#0"
+              href="https://savvypool.com/"
             >
               <div className="relative z-20 h-full overflow-hidden rounded-[inherit] bg-gray-950 after:absolute after:inset-0 after:bg-gradient-to-br after:from-gray-900/50 after:via-gray-800/25 after:to-gray-900/50">
                 {/* Image */}
-                <Image
-                  className="inline-flex"
-                  src={ClientImg04}
-                  width={350}
-                  height={288}
-                  alt="Client 04"
-                />
-                {/* Content */}
-                <div className="p-6">
-                  <div className="mb-3">
-                    <span className="btn-sm relative rounded-full bg-gray-800/40 px-2.5 py-0.5 text-xs font-normal before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_bottom,theme(colors.gray.700/.15),theme(colors.gray.700/.5))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-gray-800/60">
-                      <span className="bg-gradient-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
-                        Dynamic Collaborations
-                      </span>
+                <div className="relative flex justify-center items-center">
+                  <Image
+                    className="inline-flex"
+                    src={ClientImg05}
+                    width={350}
+                    height={288}
+                    alt="Client 04"
+                  />
+                  {/* Client name on hover */}
+                  <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="text-white text-xl font-semibold">
+                      IT SETUP
                     </span>
                   </div>
-                  <p className="text-indigo-200/65">
-                    Collaborating on innovative solutions to create shared
-                    value.
-                  </p>
                 </div>
-              </div>
-            </a>
-            {/* Client 5 */}
-            <a
-              className="group/card relative h-full overflow-hidden rounded-2xl bg-gray-800 p-px before:pointer-events-none before:absolute before:-left-40 before:-top-40 before:z-10 before:h-80 before:w-80 before:translate-x-[var(--mouse-x)] before:translate-y-[var(--mouse-y)] before:rounded-full before:bg-indigo-500/80 before:opacity-0 before:blur-3xl before:transition-opacity before:duration-500 after:pointer-events-none after:absolute after:-left-48 after:-top-48 after:z-30 after:h-64 after:w-64 after:translate-x-[var(--mouse-x)] after:translate-y-[var(--mouse-y)] after:rounded-full after:bg-indigo-500 after:opacity-0 after:blur-3xl after:transition-opacity after:duration-500 after:hover:opacity-20 before:group-hover:opacity-100"
-              href="#0"
-            >
-              <div className="relative z-20 h-full overflow-hidden rounded-[inherit] bg-gray-950 after:absolute after:inset-0 after:bg-gradient-to-br after:from-gray-900/50 after:via-gray-800/25 after:to-gray-900/50">
-                {/* Image */}
-                <Image
-                  className="inline-flex"
-                  src={ClientImg05}
-                  width={350}
-                  height={288}
-                  alt="Client 05"
-                />
                 {/* Content */}
                 <div className="p-6">
                   <div className="mb-3">
                     <span className="btn-sm relative rounded-full bg-gray-800/40 px-2.5 py-0.5 text-xs font-normal before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_bottom,theme(colors.gray.700/.15),theme(colors.gray.700/.5))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-gray-800/60">
                       <span className="bg-gradient-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
-                        Exceptional Service
+                        Innovative Pool Services
                       </span>
                     </span>
                   </div>
                   <p className="text-indigo-200/65">
-                    Delivering exceptional service that exceeds expectations.
+                    Providing state-of-the-art pool solutions to our valued
+                    customers.
                   </p>
                 </div>
               </div>
