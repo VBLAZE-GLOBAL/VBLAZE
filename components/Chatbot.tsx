@@ -24,10 +24,7 @@ const Chatbot = () => {
           aria-label="Chatbot"
           onClick={() => setSelectedOption(null)}
         >
-          <img
-            src="https://i.postimg.cc/RZqT3ybd/2-Q-removebg-preview.png"
-            alt="Chatbot"
-          />
+          🗨️
         </button>
       </div>
 
