@@ -1,0 +1,102 @@
+/* Chatbot Floating Action Button */
+.chatbotFab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ffffff; /* Purple background */
+  border-radius: 50%;
+  padding: 10px; /* Reduce the size */
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  animation: blink 2s infinite; /* Add animation */
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chatbotFab img {
+  width: 30px; /* Adjusted size */
+  height: 30px;
+}
+
+/* Blink animation */
+@keyframes blink {
+  0%,
+  100% {
+    transform: scale(1); /* Original size */
+  }
+  50% {
+    transform: scale(1.1); /* Slightly larger */
+  }
+}
+
+/* Chatbot Window */
+.chatbotWindow {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 350px;
+  background-color: #3f51b5; /* Blue background */
+  color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+}
+
+.chatbotHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chatbotHeader h4 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Chatbot Body */
+.chatbotBody {
+  margin-top: 10px;
+}
+
+.botMessage {
+  margin-bottom: 15px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.options button {
+  background-color: #fff;
+  color: #3f51b5; /* Blue text color */
+  border: none;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.options button:hover {
+  background-color: #3f51b5; /* Blue background on hover */
+  color: white; /* White text on hover */
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+}
+
+.options button:first-child {
+  margin-top: 0;
+}
