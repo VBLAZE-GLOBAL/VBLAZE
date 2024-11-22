@@ -40,7 +40,7 @@ export default function Home() {
       />
       <meta
         property="og:image"
-        content="https://i.postimg.cc/zG7qgQcd/Black-and-Dark-Space-Photo-You-Tube-Thumbnail.png" // Make sure this URL is correct and publicly accessible
+        content="https://www.vblaze.org/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fhero-image-01.158e20e6.jpg&w=3840&q=75" // Make sure this URL is correct and publicly accessible
       />
       <meta property="og:image:alt" content="VBLAZE GLOBAL - Hero Image" />
       <meta property="og:url" content="https://www.vblaze.org/" />
