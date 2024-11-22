@@ -1,5 +1,16 @@
 // pages/_document.tsx
 import Document, { Html, Head, Main, NextScript } from "next/document";
+import type { Metadata } from "next";
+import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "VBLAZE GLOBAL",
+  description: "INNOVATE. CODE. DELIVER",
+  themeColor: "#000000", // Dark blue color
+  viewport:
+    "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover",
+  manifest: "/manifest.json",
+};
 
 class MyDocument extends Document {
   render() {

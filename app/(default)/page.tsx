@@ -1,8 +1,3 @@
-export const metadata = {
-  title: "VBLAZE GLOBAL",
-  description: "INNOVATE. CODE. DELIVER",
-};
-
 import PageIllustration from "@/components/page-illustration";
 import Hero from "@/components/hero-home";
 import Workflows from "@/components/workflows";
