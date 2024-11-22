@@ -40,7 +40,7 @@ export default function Home() {
       />
       <meta
         property="og:image"
-        content="https://www.vblaze.org/assets/images/og-image.png" // Make sure this URL is correct and publicly accessible
+        content="https://i.postimg.cc/zG7qgQcd/Black-and-Dark-Space-Photo-You-Tube-Thumbnail.png" // Make sure this URL is correct and publicly accessible
       />
       <meta property="og:image:alt" content="VBLAZE GLOBAL - Hero Image" />
       <meta property="og:url" content="https://www.vblaze.org/" />
@@ -59,7 +59,7 @@ export default function Home() {
       />
       <meta
         name="twitter:image"
-        content="https://www.vblaze.org/assets/images/og-image.png" // Ensure this image link is correct
+        content="https://i.postimg.cc/zG7qgQcd/Black-and-Dark-Space-Photo-You-Tube-Thumbnail.png" // Ensure this image link is correct
       />
       <meta name="twitter:card" content="summary_large_image" />
 
@@ -69,7 +69,10 @@ export default function Home() {
         name="apple-mobile-web-app-status-bar-style"
         content="black-translucent"
       />
-      <link rel="apple-touch-icon" href="/icon.png" />
+      <link
+        rel="apple-touch-icon"
+        href="https://www.vblaze.org/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo.51565c98.png&w=64&q=75"
+      />
       <meta name="apple-mobile-web-app-title" content="VBLAZE GLOBAL" />
 
       {/* Manifest */}
