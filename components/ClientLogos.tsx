@@ -35,7 +35,7 @@ export default function OurClients() {
             >
               <div className="relative z-20 h-full overflow-hidden rounded-[inherit] bg-gray-950 after:absolute after:inset-0 after:bg-gradient-to-br after:from-gray-900/50 after:via-gray-800/25 after:to-gray-900/50">
                 {/* Image */}
-                <div className="relative flex justify-center items-center">
+                <div className="relative pt-3 flex justify-center items-center">
                   <Image
                     className="inline-flex"
                     src={ClientImg01}
@@ -73,7 +73,7 @@ export default function OurClients() {
             >
               <div className="relative z-20 h-full overflow-hidden rounded-[inherit] bg-gray-950 after:absolute after:inset-0 after:bg-gradient-to-br after:from-gray-900/50 after:via-gray-800/25 after:to-gray-900/50">
                 {/* Image */}
-                <div className="relative flex justify-center items-center">
+                <div className="relative pt-3 flex justify-center items-center">
                   <Image
                     className="inline-flex"
                     src={ClientImg02}
@@ -111,7 +111,7 @@ export default function OurClients() {
             >
               <div className="relative z-20 h-full overflow-hidden rounded-[inherit] bg-gray-950 after:absolute after:inset-0 after:bg-gradient-to-br after:from-gray-900/50 after:via-gray-800/25 after:to-gray-900/50">
                 {/* Image */}
-                <div className="relative flex justify-center items-center">
+                <div className="relative flex pt-3 justify-center items-center">
                   <Image
                     className="inline-flex"
                     src={ClientImg03}
@@ -150,7 +150,7 @@ export default function OurClients() {
             >
               <div className="relative z-20 h-full overflow-hidden rounded-[inherit] bg-gray-950 after:absolute after:inset-0 after:bg-gradient-to-br after:from-gray-900/50 after:via-gray-800/25 after:to-gray-900/50">
                 {/* Image */}
-                <div className="relative flex justify-center items-center">
+                <div className="relative flex pt-3 justify-center items-center">
                   <Image
                     className="inline-flex"
                     src={ClientImg04}
@@ -188,7 +188,7 @@ export default function OurClients() {
             >
               <div className="relative z-20 h-full overflow-hidden rounded-[inherit] bg-gray-950 after:absolute after:inset-0 after:bg-gradient-to-br after:from-gray-900/50 after:via-gray-800/25 after:to-gray-900/50">
                 {/* Image */}
-                <div className="relative flex justify-center items-center">
+                <div className="relative flex pt-3 justify-center items-center">
                   <Image
                     className="inline-flex"
                     src={ClientImg05}

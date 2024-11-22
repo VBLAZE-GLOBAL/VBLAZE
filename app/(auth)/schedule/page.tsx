@@ -1,12 +1,24 @@
 "use client";
 
+import React, { FormEvent, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
-import React, { FormEvent } from "react";
 
 const SignInPage: React.FC = () => {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // Prevent the default form submission
-    console.log("Form submitted");
+    event.preventDefault(); // Prevent default form submission
+    setIsSubmitted(true);
+
+    // Show success toast
+    toast.success("Meeting scheduled successfully!");
+
+    // Simulate form submission to FormSubmit (optional, for testing purposes)
+    setTimeout(() => {
+      (event.target as HTMLFormElement).submit();
+    }, 1500);
   };
 
   return (
@@ -108,12 +120,17 @@ const SignInPage: React.FC = () => {
             <div className="mt-6">
               <button
                 type="submit"
-                className="btn w-full bg-gradient-to-t from-indigo-600 to-indigo-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-[inset_0px_1px_0px_0px_theme(colors.white/.16)] hover:bg-[length:100%_150%]"
+                disabled={isSubmitted}
+                className={`btn w-full bg-gradient-to-t from-indigo-600 to-indigo-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-[inset_0px_1px_0px_0px_theme(colors.white/.16)] hover:bg-[length:100%_150%] ${
+                  isSubmitted ? "cursor-not-allowed opacity-50" : ""
+                }`}
               >
-                Schedule Meeting
+                {isSubmitted ? "Submitting..." : "Schedule Meeting"}
               </button>
             </div>
           </form>
+          {/* Toast Container */}
+          <ToastContainer />
           {/* Bottom link */}
           <div className="mt-6 text-center text-sm text-indigo-200/65">
             Looking for something else?{" "}
