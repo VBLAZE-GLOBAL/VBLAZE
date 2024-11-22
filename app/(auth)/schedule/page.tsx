@@ -117,6 +117,12 @@ const SignInPage: React.FC = () => {
                 ></textarea>
               </div>
             </div>
+            {/* Hidden input field for redirecting after submission */}
+            <input
+              type="hidden"
+              name="_next"
+              value="https://thanks.vblaze.org/"
+            />
             <div className="mt-6">
               <button
                 type="submit"
