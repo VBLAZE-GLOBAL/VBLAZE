@@ -43,9 +43,8 @@ export default function Features() {
               Built for Modern Products
             </h2>
             <p className="text-lg text-indigo-200/65">
-              Services typically refer to the different types of support, tools,
-              or functionality offered to users to help them design, build,
-              scale, and maintain their products.
+              We offer a range of services designed to help you at every stage
+              of your product journey.
             </p>
           </div>
           <div className="flex justify-center pb-4 md:pb-12" data-aos="fade-up">
