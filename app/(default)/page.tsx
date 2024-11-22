@@ -38,7 +38,10 @@ export default function Home() {
         property="og:description"
         content="VBLAZE GLOBAL: INNOVATE. CODE. DELIVER. Your trusted partner for IT solutions, including AI, VR, Web Development, Laravel, and more."
       />
-      <meta property="og:image" content="/images/hero-image-01.jpg" />
+      <meta
+        property="og:image"
+        content="https://i.postimg.cc/zG7qgQcd/Black-and-Dark-Space-Photo-You-Tube-Thumbnail.png"
+      />
       <meta property="og:image:alt" content="VBLAZE GLOBAL - Hero Image" />
       <meta property="og:url" content="https://www.vblaze.org/" />
       <meta property="og:type" content="website" />
@@ -52,7 +55,10 @@ export default function Home() {
         name="twitter:description"
         content="VBLAZE GLOBAL: INNOVATE. CODE. DELIVER. Your trusted partner for IT solutions, including AI, VR, Web Development, Laravel, and more."
       />
-      <meta name="twitter:image" content="/images/hero-image-01.jpg" />
+      <meta
+        name="twitter:image"
+        content="https://i.postimg.cc/zG7qgQcd/Black-and-Dark-Space-Photo-You-Tube-Thumbnail.png"
+      />
       <meta name="twitter:card" content="summary_large_image" />
 
       {/* Apple-Specific Meta Tags */}
@@ -61,7 +67,7 @@ export default function Home() {
         name="apple-mobile-web-app-status-bar-style"
         content="black-translucent"
       />
-      <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+      <link rel="apple-touch-icon" href="/icon.png" />
       <meta name="apple-mobile-web-app-title" content="VBLAZE GLOBAL" />
 
       {/* Manifest */}
