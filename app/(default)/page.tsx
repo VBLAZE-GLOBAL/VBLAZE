@@ -40,11 +40,13 @@ export default function Home() {
       />
       <meta
         property="og:image"
-        content="https://i.postimg.cc/zG7qgQcd/Black-and-Dark-Space-Photo-You-Tube-Thumbnail.png"
+        content="https://www.vblaze.org/assets/images/og-image.png" // Make sure this URL is correct and publicly accessible
       />
       <meta property="og:image:alt" content="VBLAZE GLOBAL - Hero Image" />
       <meta property="og:url" content="https://www.vblaze.org/" />
       <meta property="og:type" content="website" />
+      <meta property="og:locale" content="en_US" />
+      <meta property="og:site_name" content="VBLAZE GLOBAL" />
 
       {/* Twitter Card Metadata */}
       <meta
@@ -57,7 +59,7 @@ export default function Home() {
       />
       <meta
         name="twitter:image"
-        content="https://i.postimg.cc/zG7qgQcd/Black-and-Dark-Space-Photo-You-Tube-Thumbnail.png"
+        content="https://www.vblaze.org/assets/images/og-image.png" // Ensure this image link is correct
       />
       <meta name="twitter:card" content="summary_large_image" />
 
