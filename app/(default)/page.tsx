@@ -5,8 +5,7 @@ import Features from "@/components/features";
 import Cta from "@/components/cta";
 import Chatbot from "@/components/Chatbot";
 import ClientLogos from "@/components/ClientLogos";
-import SEO from "@/components/SEO";
-
+import GoogleDeveloperBadges from "@/components/GoogleDeveloperBadges";
 export default function Home() {
   return (
     <>
@@ -87,6 +86,7 @@ export default function Home() {
 
       <PageIllustration />
       <Hero />
+      <GoogleDeveloperBadges />
       <ClientLogos />
       <Workflows />
       <Features />

@@ -81,11 +81,15 @@ const Chatbot = () => {
               {optionsVisible && (
                 <div className={styles.options}>
                   <button onClick={() => selectOption("developers")}>
-                    Contact Developers
+                    Meet our UAE Team
                   </button>
                   <button onClick={() => selectOption("marketing")}>
-                    Contact Marketing Team
+                    Meat our IND Team
                   </button>
+                  <br></br>
+                  <p className="text-gray-400">
+                    Stay tuned for AI-powered solutions!
+                  </p>
                 </div>
               )}
             </div>
