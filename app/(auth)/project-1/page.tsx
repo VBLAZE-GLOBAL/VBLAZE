@@ -97,7 +97,7 @@ function Section({
   );
 }
 
-// Main ProjectPage Component
+// Main P18Fitness ProjectPage Component
 export default function ProjectPage() {
   const [currentImage, setCurrentImage] = useState(0);
   const containerRef = useRef(null);
@@ -111,78 +111,81 @@ export default function ProjectPage() {
   const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.8, 0.6]);
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.98, 0.96]);
 
-  // Mock data for the project
+  // Mock data for the P18 Fitness project
   const project = {
     screenshots: [
       "/images/projects/p1img1.png",
       "/images/projects/p1img2.png",
       "/images/projects/p1img3.png",
     ],
-    name: "Project Phoenix",
+    name: "P18 Fitness",
 
     shortDescription:
-      "A revolutionary app transforming fitness management with AI-powered training.",
+      "A comprehensive fitness app that offers personalized workout plans, progress tracking, and expert coaching.",
     fullDescription:
-      "Project Phoenix is a cutting-edge fitness management app that leverages artificial intelligence to personalize workout plans, track progress, and offer real-time insights. With features like voice recognition, real-time analytics, and cloud syncing, it provides an unmatched experience for users committed to their fitness journey.",
+      "P18 Fitness is an innovative app designed to help users achieve their fitness goals through personalized training plans, detailed progress tracking, and direct access to certified coaches. With a focus on providing users with a holistic fitness experience, the app combines AI-driven insights and expert guidance to maximize results.",
     features: [
-      "AI-based workout personalization",
-      "Real-time progress tracking",
-      "Voice recognition for hands-free control",
-      "Cloud sync for multi-device use",
-      "Instant feedback and motivation",
-      "Comprehensive performance analytics",
+      "Personalized workout plans based on user goals",
+      "Real-time progress tracking and analytics",
+      "One-on-one coaching with fitness experts",
+      "Access to exclusive workout videos",
+      "Integration with health tracking devices",
+      "Community-driven support and motivation",
     ],
 
     caseStudy:
-      "In the pilot program, Project Phoenix helped 100 users achieve 30% faster progress with personalized workout suggestions and tracking, leading to increased engagement and better results.",
+      "During the beta phase, P18 Fitness saw a 50% increase in user engagement and a 30% improvement in workout adherence, thanks to its personalized approach and easy-to-use interface.",
     timelineData: [
       {
-        phase: "Conceptualization",
+        phase: "Research & Planning",
         duration: 2,
-        description: "Defining project scope and initial user research",
+        description: "Market research and defining core features.",
       },
       {
-        phase: "Development",
+        phase: "Design & Development",
         duration: 6,
-        description: "Building core features and design iterations",
+        description: "Building the platform and designing the user experience.",
       },
       {
-        phase: "Testing",
+        phase: "Testing & Iteration",
         duration: 3,
-        description: "Extensive user testing and feature refinement",
+        description: "User testing and iterative improvements.",
       },
       {
         phase: "Launch",
         duration: 1,
-        description: "Public release and marketing push",
+        description: "Public release and marketing campaigns.",
       },
       {
-        phase: "Post-Launch",
+        phase: "Post-Launch Support",
         duration: 4,
-        description: "Ongoing support, bug fixes, and updates",
+        description: "Customer support, bug fixes, and feature updates.",
       },
     ],
     collaborators: [
       {
-        name: "John Doe",
-        role: "Project Manager",
+        name: "Alex Johnson",
+        role: "Lead Developer",
         image: "/images/testimonial-01.jpg",
       },
       {
-        name: "Jane Smith",
-        role: "Lead Developer",
+        name: "Emma Williams",
+        role: "UI/UX Designer",
         image: "/images/testimonial-02.jpg",
       },
       {
         name: "Michael Brown",
-        role: "UX/UI Designer",
-        image: "/images/testimonial-05.jpg",
+        role: "Fitness Expert",
+        image: "/images/testimonial-03.jpg",
       },
     ],
     clientFeedback:
-      "Project Phoenix has completely changed how we approach fitness. The real-time analytics and personalized insights have pushed our training to the next level.",
+      "P18 Fitness has revolutionized my workout routine. The personalized workout plans and expert guidance keep me on track and motivated every day.",
     technicalSpecs: [
-      { name: "AI Model", value: "Custom machine learning algorithms" },
+      {
+        name: "AI Algorithms",
+        value: "Custom-built for workout personalization",
+      },
       { name: "Backend", value: "Node.js, Express.js" },
       { name: "Frontend", value: "React, Tailwind CSS" },
     ],
@@ -208,7 +211,7 @@ export default function ProjectPage() {
         <p className="text-white/80">{project.fullDescription}</p>
       </Section>
 
-      <Section title="Features" content="Key Features of Project Phoenix">
+      <Section title="Features" content="Key Features of P18 Fitness">
         <ul className="list-disc pl-6 space-y-2">
           {project.features.map((feature, index) => (
             <li key={index} className="text-white/80">
@@ -220,7 +223,7 @@ export default function ProjectPage() {
 
       <Section title="Screenshots" content="Project Screenshots">
         <div className="relative my-8">
-          <div className="relative h-[500px] w-full overflow-hidden rounded-lg">
+          <div className="relative w-full h-[50vw] sm:h-[60vh] md:h-[400px] lg:h-[500px] overflow-hidden rounded-lg">
             <Image
               src={project.screenshots[currentImage]}
               alt={`Screenshot ${currentImage + 1}`}
@@ -244,14 +247,30 @@ export default function ProjectPage() {
         </div>
       </Section>
 
-      <Section title="Timeline" content="Project Phases & Timeline">
+      <Section title="Project Timeline" content="Development Phases">
         <TimelineChart data={project.timelineData} />
       </Section>
 
+      <Section title="Client Feedback" content="Client's Experience">
+        <blockquote className="text-white/80 italic">
+          "{project.clientFeedback}"
+        </blockquote>
+      </Section>
+
+      <Section title="Technical Specifications" content="Tech Stack & Tools">
+        <ul className="list-disc pl-6 space-y-2">
+          {project.technicalSpecs.map((spec, index) => (
+            <li key={index} className="text-white/80">
+              <strong>{spec.name}:</strong> {spec.value}
+            </li>
+          ))}
+        </ul>
+      </Section>
+
       <Section title="Collaborators" content="Meet the Team">
-        <div className="flex gap-6">
-          {project.collaborators.map((collaborator) => (
-            <div key={collaborator.name} className="text-center">
+        <div className="grid grid-cols-3 gap-8">
+          {project.collaborators.map((collaborator, index) => (
+            <div key={index} className="text-center">
               <Image
                 src={collaborator.image}
                 alt={collaborator.name}
@@ -259,28 +278,11 @@ export default function ProjectPage() {
                 height={100}
                 className="rounded-full mx-auto"
               />
-              <p className="mt-2 text-white font-semibold">
-                {collaborator.name}
-              </p>
+              <p className="font-semibold text-white">{collaborator.name}</p>
               <p className="text-white/80">{collaborator.role}</p>
             </div>
           ))}
         </div>
-      </Section>
-
-      <Section title="Client Feedback" content="What Our Client Says">
-        <p className="text-white/80">{project.clientFeedback}</p>
-      </Section>
-
-      <Section title="Technical Specifications" content="Technical Details">
-        <ul className="space-y-2">
-          {project.technicalSpecs.map((spec, index) => (
-            <li key={index} className="text-white/80">
-              <strong>{spec.name}: </strong>
-              {spec.value}
-            </li>
-          ))}
-        </ul>
       </Section>
     </div>
   );
