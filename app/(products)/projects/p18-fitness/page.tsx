@@ -267,7 +267,7 @@ export default function ProjectPage() {
         </ul>
       </Section>
 
-      <Section title="Collaborators" content="Meet the Team">
+      {/* <Section title="Collaborators" content="Meet the Team">
         <div className="grid grid-cols-3 gap-8">
           {project.collaborators.map((collaborator, index) => (
             <div key={index} className="text-center">
@@ -283,7 +283,7 @@ export default function ProjectPage() {
             </div>
           ))}
         </div>
-      </Section>
+      </Section> */}
     </div>
   );
 }

@@ -244,7 +244,7 @@ export default function ProjectPage() {
         <TimelineChart data={project.timelineData} />
       </Section>
 
-      <Section title="Collaborators" content="Meet Our Team">
+      {/* <Section title="Collaborators" content="Meet Our Team">
         <div className="flex gap-8">
           {project.collaborators.map((collaborator, index) => (
             <div key={index} className="text-center space-y-2 w-1/3">
@@ -260,7 +260,7 @@ export default function ProjectPage() {
             </div>
           ))}
         </div>
-      </Section>
+      </Section> */}
 
       <Section title="Client Feedback" content="What Our Clients Say">
         <p className="italic text-white/80">{project.clientFeedback}</p>
