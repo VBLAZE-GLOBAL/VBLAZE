@@ -98,13 +98,15 @@ export default function ProjectsArchivePage() {
                   </svg>
                 </div>
                 {/* Image */}
-                <Image
-                  className="inline-flex"
-                  src={project.image}
-                  width={350}
-                  height={288}
-                  alt={project.name}
-                />
+                <div className="relative flex pt-3 justify-center items-center">
+                  <Image
+                    className="inline-flex"
+                    src={project.image}
+                    width={350}
+                    height={288}
+                    alt={project.name}
+                  />
+                </div>
                 {/* Content */}
                 <div className="p-6">
                   <div className="mb-3">

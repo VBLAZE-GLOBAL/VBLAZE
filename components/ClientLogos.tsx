@@ -220,6 +220,14 @@ export default function OurClients() {
               </div>
             </a>
           </Spotlight>
+          <a
+            className="group relative mx-auto mt-12 flex h-12 w-48 items-center justify-center overflow-hidden rounded-full border border-gradient-to-r border-indigo-500 text-center transition-all duration-300 hover:scale-105"
+            href="/projects" // Adjust the href to the desired link
+          >
+            <span className="relative z-10 text-lg font-medium text-indigo-500 transition-all duration-300 group-hover:text-indigo-400">
+              MORE PROJECTS
+            </span>
+          </a>
         </div>
       </div>
     </section>

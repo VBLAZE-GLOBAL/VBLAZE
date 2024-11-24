@@ -7,32 +7,32 @@ export default function GoogleDeveloperBadges() {
     {
       image:
         "https://developers.google.com/static/profile/badges/recognitions/learnings/learnings.svg",
-      link: "https://developers.google.com/profile/u/i_yam_three_",
+      link: "#",
     },
     {
       image:
         "https://developers.google.com/static/profile/badges/activity/android/install-android-studio/badge.svg",
-      link: "https://developers.google.com/profile/u/i_yam_three_",
+      link: "#",
     },
     {
       image:
         "https://developers.google.com/static/profile/badges/playlists/first-playlist/badge.svg",
-      link: "https://developers.google.com/profile/u/i_yam_three_",
+      link: "#",
     },
     {
       image:
         "https://developers.google.com/static/profile/badges/playlists/firebase/add_firebase_to_flutter/firebase-flutter.svg",
-      link: "https://developers.google.com/profile/u/i_yam_three_",
+      link: "#",
     },
     {
       image:
         "https://developers.google.com/static/profile/badges/codelabs/first-codelab/badge.svg",
-      link: "https://developers.google.com/profile/u/i_yam_three_",
+      link: "#",
     },
     {
       image:
         "https://developers.google.com/static/profile/badges/profile/created-profile/created_profile.svg",
-      link: "https://developers.google.com/profile/u/i_yam_three_",
+      link: "#",
     },
   ];
 
