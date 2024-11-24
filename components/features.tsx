@@ -72,11 +72,11 @@ export default function Features() {
                 />
               </svg>
               <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                VR Filters Creators
+                Artificial Intelligence
               </h3>
               <p className="text-indigo-200/65">
-                your social media presence with custom AR/VR filters for
-                platforms like Instagram, Facebook, TiKTok and SnapChat.
+                Your social presence with custom AI Integrations for platforms
+                like OpenAI, Claude Sonnet, and VbAI.
               </p>
             </article>
             <article>
