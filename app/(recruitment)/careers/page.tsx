@@ -1,252 +1,337 @@
 "use client";
+
 import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link";
 import {
   FaMapMarkerAlt,
-  FaTag,
   FaRegEnvelope,
   FaWhatsapp,
+  FaTag,
 } from "react-icons/fa";
-import { ToastContainer, toast } from "react-toastify"; // Ensure toast is used.
+import { BsFillPersonFill } from "react-icons/bs";
 
-const RecruitmentPage = () => {
-  const [filters, setFilters] = useState({
-    location: "",
-    jobType: "",
-    languages: [],
-    isActive: true,
-  });
+// Job data with additional details
+const jobPosts = [
+  {
+    id: 1,
+    title: "Flutter Developer",
+    shortDescription: "Develop and maintain mobile apps using Flutter.",
+    fullDescription:
+      "As a Flutter Developer, you will work with our team to create stunning cross-platform mobile applications using the Flutter framework. You should have experience with Dart, Firebase, and an understanding of mobile app lifecycle management.",
+    jobType: "Full-Time",
+    location: "UAE",
+    languages: ["English", "Arabic"],
+    skills: ["Dart", "Flutter", "Firebase", "Mobile App Development"],
+    active: true,
+  },
+  {
+    id: 2,
+    title: "React JS Developer",
+    shortDescription: "Build and maintain web applications using ReactJS.",
+    fullDescription:
+      "We are looking for a ReactJS Developer who is passionate about building fast and scalable web applications. You should be proficient in JavaScript, React, Redux, and have a solid understanding of front-end development principles.",
+    jobType: "Part-Time",
+    location: "India",
+    languages: ["English"],
+    skills: ["JavaScript", "React", "Redux", "HTML", "CSS"],
+    active: true,
+  },
+  {
+    id: 3,
+    title: "WordPress Developer",
+    shortDescription: "Create and customize WordPress websites.",
+    fullDescription:
+      "As a WordPress Developer, you will be responsible for creating and maintaining WordPress sites. Proficiency in PHP, MySQL, HTML, CSS, and WordPress themes/plugins is required.",
+    jobType: "Contract",
+    location: "UAE",
+    languages: ["English"],
+    skills: ["PHP", "WordPress", "MySQL", "HTML", "CSS"],
+    active: false,
+  },
+  {
+    id: 4,
+    title: "Graphic Designer",
+    shortDescription: "Design graphics and branding materials for marketing.",
+    fullDescription:
+      "We are looking for a Graphic Designer who will design creative visuals for various marketing campaigns. Strong skills in Adobe Photoshop, Illustrator, and branding experience are essential.",
+    jobType: "Freelance",
+    location: "India",
+    languages: ["English", "Hindi"],
+    skills: ["Adobe Photoshop", "Illustrator", "Branding", "Graphic Design"],
+    active: true,
+  },
+];
+
+const RecruitmentPage: React.FC = () => {
+  const [selectedJob, setSelectedJob] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedJob, setSelectedJob] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterLocation, setFilterLocation] = useState<string[]>([]);
+  const [filterJobTitle, setFilterJobTitle] = useState<string[]>([]);
+  const [filterLanguages, setFilterLanguages] = useState<string[]>([]);
+  const [isActive, setIsActive] = useState<boolean | null>(null);
 
-  // Sample job data
-  const jobs = [
-    {
-      id: 1,
-      title: "Software Engineer",
-      shortDescription: "Develop software solutions",
-      fullDescription:
-        "Detailed description about the Software Engineer job...",
-      location: "New York",
-      jobType: "Full-time",
-      languages: ["English", "Spanish"],
-      isActive: true,
-    },
-    {
-      id: 2,
-      title: "UX Designer",
-      shortDescription: "Design beautiful user interfaces",
-      fullDescription: "Detailed description about the UX Designer job...",
-      location: "San Francisco",
-      jobType: "Part-time",
-      languages: ["English", "French"],
-      isActive: true,
-    },
-    // More jobs...
-  ];
-
-  const filteredJobs = jobs.filter((job) => {
-    const matchesLocation = filters.location
-      ? job.location.toLowerCase().includes(filters.location.toLowerCase())
-      : true;
-    const matchesJobType = filters.jobType
-      ? job.jobType === filters.jobType
-      : true;
-    const matchesLanguages = filters.languages.length
-      ? filters.languages.some((lang) => job.languages.includes(lang))
-      : true;
-    const matchesActiveStatus = job.isActive === filters.isActive;
-    return (
-      matchesLocation &&
-      matchesJobType &&
-      matchesLanguages &&
-      matchesActiveStatus
-    );
-  });
-
-  const handleFilterChange = (e) => {
-    const { name, value, checked, type } = e.target;
-    if (type === "checkbox") {
-      setFilters((prevFilters) => ({
-        ...prevFilters,
-        [name]: checked
-          ? [...prevFilters[name], value] // Add language to the list
-          : prevFilters[name].filter((v) => v !== value), // Remove language from the list
-      }));
-    } else {
-      setFilters((prevFilters) => ({
-        ...prevFilters,
-        [name]: value,
-      }));
-    }
-  };
-
-  const openModal = (job) => {
+  const openModal = (job: any) => {
     setSelectedJob(job);
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
     setSelectedJob(null);
+    setIsModalOpen(false);
   };
 
-  const handleApply = (method) => {
-    if (method === "Email") {
-      // Apply via Email (mailto)
-      window.location.href = "mailto:info@vblaze.org";
-      toast.success("Application sent via Email");
-    } else if (method === "WhatsApp") {
-      // Apply via WhatsApp
-      window.location.href = "https://wa.me/+971558291800";
-      toast.success("Application sent via WhatsApp");
-    }
+  const handleApply = (method: string) => {
+    toast.success(`Applied via ${method}!`, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
     closeModal();
   };
 
-  return (
-    <section className="container mx-auto py-10 px-5">
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Filter Options */}
-        <div className="lg:col-span-1 space-y-4">
-          <div className="bg-gray-800 p-4 rounded-lg">
-            <h2 className="text-xl font-semibold text-white">Filters</h2>
+  const handleLocationFilterChange = (location: string) => {
+    setFilterLocation((prevState) =>
+      prevState.includes(location)
+        ? prevState.filter((item) => item !== location)
+        : [...prevState, location]
+    );
+  };
 
-            {/* Location Filter */}
-            <div className="mt-4">
-              <label className="text-white block">Location</label>
+  const handleJobTitleFilterChange = (title: string) => {
+    setFilterJobTitle((prevState) =>
+      prevState.includes(title)
+        ? prevState.filter((item) => item !== title)
+        : [...prevState, title]
+    );
+  };
+
+  const handleLanguageFilterChange = (language: string) => {
+    setFilterLanguages((prevState) =>
+      prevState.includes(language)
+        ? prevState.filter((item) => item !== language)
+        : [...prevState, language]
+    );
+  };
+
+  const filteredJobs = jobPosts.filter((job) => {
+    return (
+      job.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      (filterLocation.length ? filterLocation.includes(job.location) : true) &&
+      (filterJobTitle.length ? filterJobTitle.includes(job.title) : true) &&
+      (filterLanguages.length
+        ? filterLanguages.some((lang) => job.languages.includes(lang))
+        : true) &&
+      (isActive !== null ? job.active === isActive : true)
+    );
+  });
+
+  return (
+    <section>
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="py-12 md:py-20">
+          {/* Section header */}
+          <div className="pb-12 text-center">
+            <h1 className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,theme(colors.gray.200),theme(colors.indigo.200),theme(colors.gray.50),theme(colors.indigo.300),theme(colors.gray.200))] bg-[length:200%_auto] bg-clip-text font-nacelle text-3xl font-semibold text-transparent md:text-4xl">
+              Job Opportunities
+            </h1>
+          </div>
+
+          {/* Search and Filter Options */}
+          <div className="mb-8 flex flex-col md:flex-row justify-between items-center">
+            <div className="flex items-center mb-4 md:mb-0">
               <input
                 type="text"
-                name="location"
-                value={filters.location}
-                onChange={handleFilterChange}
-                className="mt-2 p-2 w-full rounded-md bg-gray-700 text-white"
-                placeholder="Search by location"
+                className="w-full max-w-sm p-3 rounded-lg border border-gray-600 bg-gray-800 text-white"
+                placeholder="Search jobs..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
 
-            {/* Job Type Filter */}
-            <div className="mt-4">
-              <label className="text-white block">Job Type</label>
-              <select
-                name="jobType"
-                value={filters.jobType}
-                onChange={handleFilterChange}
-                className="mt-2 p-2 w-full rounded-md bg-gray-700 text-white"
-              >
-                <option value="">All</option>
-                <option value="Full-time">Full-time</option>
-                <option value="Part-time">Part-time</option>
-              </select>
-            </div>
+            {/* Filter Panel */}
+            <div className="flex flex-wrap gap-4 mb-4 md:mb-0">
+              {/* Locations */}
+              <div>
+                <label className="text-white">Locations</label>
+                <div className="flex gap-2">
+                  {["UAE", "India"].map((location) => (
+                    <label key={location} className="text-gray-400">
+                      <input
+                        type="checkbox"
+                        value={location}
+                        checked={filterLocation.includes(location)}
+                        onChange={() => handleLocationFilterChange(location)}
+                        className="mr-2"
+                      />
+                      {location}
+                    </label>
+                  ))}
+                </div>
+              </div>
 
-            {/* Language Filter */}
-            <div className="mt-4">
-              <label className="text-white block">Languages</label>
-              <div className="space-y-2">
-                {["English", "Spanish", "French"].map((language) => (
-                  <div key={language} className="flex items-center">
+              {/* Job Titles */}
+              <div>
+                <label className="text-white">Job Titles</label>
+                <div className="flex gap-2">
+                  {[
+                    "Flutter Developer",
+                    "React JS Developer",
+                    "WordPress Developer",
+                    "Graphic Designer",
+                  ].map((title) => (
+                    <label key={title} className="text-gray-400">
+                      <input
+                        type="checkbox"
+                        value={title}
+                        checked={filterJobTitle.includes(title)}
+                        onChange={() => handleJobTitleFilterChange(title)}
+                        className="mr-2"
+                      />
+                      {title}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Languages */}
+              <div>
+                <label className="text-white">Languages</label>
+                <div className="flex gap-2">
+                  {["English", "Arabic", "Hindi"].map((language) => (
+                    <label key={language} className="text-gray-400">
+                      <input
+                        type="checkbox"
+                        value={language}
+                        checked={filterLanguages.includes(language)}
+                        onChange={() => handleLanguageFilterChange(language)}
+                        className="mr-2"
+                      />
+                      {language}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Active Now */}
+              <div>
+                <label className="text-white">Active Now</label>
+                <div className="flex gap-2">
+                  <label className="text-gray-400">
                     <input
                       type="checkbox"
-                      name="languages"
-                      value={language}
-                      checked={filters.languages.includes(language)} // Ensure checked is based on filter state
-                      onChange={handleFilterChange} // Handle change correctly
-                      className="text-white"
+                      checked={isActive === true}
+                      onChange={() =>
+                        setIsActive(isActive === true ? null : true)
+                      }
+                      className="mr-2"
                     />
-                    <label className="text-white ml-2">{language}</label>
-                  </div>
-                ))}
+                    Yes
+                  </label>
+                  <label className="text-gray-400">
+                    <input
+                      type="checkbox"
+                      checked={isActive === false}
+                      onChange={() =>
+                        setIsActive(isActive === false ? null : false)
+                      }
+                      className="mr-2"
+                    />
+                    No
+                  </label>
+                </div>
               </div>
-            </div>
-
-            {/* Active Status Filter */}
-            <div className="mt-4 flex items-center">
-              <input
-                type="checkbox"
-                name="isActive"
-                checked={filters.isActive}
-                onChange={() =>
-                  setFilters((prevFilters) => ({
-                    ...prevFilters,
-                    isActive: !prevFilters.isActive,
-                  }))
-                }
-                className="text-white"
-              />
-              <label className="text-white ml-2">Active Jobs Only</label>
             </div>
           </div>
-        </div>
 
-        {/* Job Listings */}
-        <div className="lg:col-span-3 space-y-6">
-          {filteredJobs.length > 0 ? (
-            filteredJobs.map((job) => (
-              <div key={job.id} className="bg-gray-800 p-4 rounded-lg">
-                <h2 className="text-xl font-semibold text-white">
-                  {job.title}
-                </h2>
-                <p className="text-gray-400">{job.shortDescription}</p>
-                <div className="mt-4 flex items-center gap-3">
-                  <div className="flex gap-2 items-center">
-                    <FaMapMarkerAlt className="text-gray-400" />
-                    <span className="text-gray-400">{job.location}</span>
-                  </div>
-                  <div className="flex gap-2 items-center">
-                    <FaTag className="text-gray-400" />
-                    <span className="text-gray-400">{job.jobType}</span>
+          {/* Job Listings */}
+          <div className="space-y-6">
+            {filteredJobs.length > 0 ? (
+              filteredJobs.map((job) => (
+                <div
+                  key={job.id}
+                  className="bg-gray-800 border border-gray-600 p-4 rounded-lg hover:bg-gray-700 transition"
+                >
+                  <h2 className="text-2xl font-bold text-white">{job.title}</h2>
+                  <p className="text-gray-300">{job.shortDescription}</p>
+                  <div className="mt-4 flex gap-4">
+                    <button
+                      onClick={() => openModal(job)}
+                      className="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg"
+                    >
+                      View Details
+                    </button>
                   </div>
                 </div>
+              ))
+            ) : (
+              <p className="text-white">No job postings found.</p>
+            )}
+          </div>
 
-                <div className="mt-4 flex items-center gap-4">
+          {/* Modal */}
+          {isModalOpen && selectedJob && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+              <div className="bg-gray-800 p-6 rounded-lg w-full max-w-lg">
+                <h2 className="text-3xl font-bold text-white">
+                  {selectedJob.title}
+                </h2>
+                <p className="text-gray-400">{selectedJob.fullDescription}</p>
+                <div className="mt-4">
+                  <h3 className="text-lg font-semibold text-white">Details:</h3>
+                  <p className="text-gray-300">
+                    <FaMapMarkerAlt className="inline mr-2" />
+                    Location: {selectedJob.location}
+                  </p>
+                  <p className="text-gray-300">
+                    <FaRegEnvelope className="inline mr-2" />
+                    Email: info@p18fitness.com
+                  </p>
+                  <p className="text-gray-300">
+                    <FaWhatsapp className="inline mr-2" />
+                    WhatsApp: +1234567890
+                  </p>
+                  <p className="text-gray-300">
+                    <FaTag className="inline mr-2" />
+                    Job Type: {selectedJob.jobType}
+                  </p>
+                  <p className="text-gray-300">
+                    <BsFillPersonFill className="inline mr-2" />
+                    Skills: {selectedJob.skills.join(", ")}
+                  </p>
+                </div>
+                <div className="mt-4 flex gap-4">
                   <button
-                    onClick={() => openModal(job)}
-                    className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300"
+                    onClick={() => handleApply("Email")}
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg"
                   >
-                    Apply Now
+                    Apply via Email
+                  </button>
+                  <button
+                    onClick={() => handleApply("WhatsApp")}
+                    className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg"
+                  >
+                    Apply via WhatsApp
                   </button>
                 </div>
+                <button
+                  onClick={closeModal}
+                  className="mt-4 text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg"
+                >
+                  Close
+                </button>
               </div>
-            ))
-          ) : (
-            <p className="text-gray-500">
-              No jobs found matching your filters.
-            </p>
+            </div>
           )}
         </div>
       </div>
-
-      {/* Modal */}
-      {isModalOpen && selectedJob && (
-        <div className="fixed inset-0 z-10 flex justify-center items-center bg-black bg-opacity-50">
-          <div className="bg-gray-800 p-8 rounded-lg w-96 relative">
-            <h3 className="text-2xl text-white">{selectedJob.title}</h3>
-            <p className="text-gray-400 mt-4">{selectedJob.fullDescription}</p>
-            <div className="mt-4 flex gap-4">
-              <button
-                onClick={() => handleApply("Email")}
-                className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition duration-300"
-              >
-                <FaRegEnvelope className="mr-2" />
-                Apply via Email
-              </button>
-              <button
-                onClick={() => handleApply("WhatsApp")}
-                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition duration-300"
-              >
-                <FaWhatsapp className="mr-2" />
-                Apply via WhatsApp
-              </button>
-            </div>
-            <button
-              onClick={closeModal}
-              className="absolute top-2 right-2 text-gray-500 hover:text-white"
-            >
-              ×
-            </button>
-          </div>
-        </div>
-      )}
 
       <ToastContainer />
     </section>
