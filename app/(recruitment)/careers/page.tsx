@@ -38,30 +38,7 @@ const jobPosts = [
     skills: ["JavaScript", "React", "Redux", "HTML", "CSS"],
     active: true,
   },
-  {
-    id: 3,
-    title: "WordPress Developer",
-    shortDescription: "Create and customize WordPress websites.",
-    fullDescription:
-      "As a WordPress Developer, you will be responsible for creating and maintaining WordPress sites. Proficiency in PHP, MySQL, HTML, CSS, and WordPress themes/plugins is required.",
-    jobType: "Contract",
-    location: "UAE",
-    languages: ["English"],
-    skills: ["PHP", "WordPress", "MySQL", "HTML", "CSS"],
-    active: false,
-  },
-  {
-    id: 4,
-    title: "Graphic Designer",
-    shortDescription: "Design graphics and branding materials for marketing.",
-    fullDescription:
-      "We are looking for a Graphic Designer who will design creative visuals for various marketing campaigns. Strong skills in Adobe Photoshop, Illustrator, and branding experience are essential.",
-    jobType: "Freelance",
-    location: "India",
-    languages: ["English", "Hindi"],
-    skills: ["Adobe Photoshop", "Illustrator", "Branding", "Graphic Design"],
-    active: true,
-  },
+  // Other job posts...
 ];
 
 const RecruitmentPage: React.FC = () => {
@@ -72,6 +49,7 @@ const RecruitmentPage: React.FC = () => {
   const [filterJobTitle, setFilterJobTitle] = useState<string[]>([]);
   const [filterLanguages, setFilterLanguages] = useState<string[]>([]);
   const [isActive, setIsActive] = useState<boolean | null>(null);
+  const [isFilterOpen, setIsFilterOpen] = useState(false); // State to toggle filter visibility
 
   const openModal = (job: any) => {
     setSelectedJob(job);
@@ -157,98 +135,107 @@ const RecruitmentPage: React.FC = () => {
             </div>
 
             {/* Filter Panel */}
-            <div className="flex flex-wrap gap-4 mb-4 md:mb-0">
-              {/* Locations */}
-              <div>
-                <label className="text-white">Locations</label>
-                <div className="flex gap-2">
-                  {["UAE", "India"].map((location) => (
-                    <label key={location} className="text-gray-400">
+            <button
+              onClick={() => setIsFilterOpen((prev) => !prev)} // Toggle filter visibility
+              className="bg-blue-600 text-white p-3 rounded-lg"
+            >
+              Filters
+            </button>
+
+            {isFilterOpen && ( // Conditionally render the filter options
+              <div className="flex flex-wrap gap-4 mb-4 md:mb-0">
+                {/* Locations */}
+                <div>
+                  <label className="text-white">Locations</label>
+                  <div className="flex gap-2">
+                    {["UAE", "India"].map((location) => (
+                      <label key={location} className="text-gray-400">
+                        <input
+                          type="checkbox"
+                          value={location}
+                          checked={filterLocation.includes(location)}
+                          onChange={() => handleLocationFilterChange(location)}
+                          className="mr-2"
+                        />
+                        {location}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Job Titles */}
+                <div>
+                  <label className="text-white">Job Titles</label>
+                  <div className="flex gap-2">
+                    {[
+                      "Flutter Developer",
+                      "React JS Developer",
+                      "WordPress Developer",
+                      "Graphic Designer",
+                    ].map((title) => (
+                      <label key={title} className="text-gray-400">
+                        <input
+                          type="checkbox"
+                          value={title}
+                          checked={filterJobTitle.includes(title)}
+                          onChange={() => handleJobTitleFilterChange(title)}
+                          className="mr-2"
+                        />
+                        {title}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Languages */}
+                <div>
+                  <label className="text-white">Languages</label>
+                  <div className="flex gap-2">
+                    {["English", "Arabic", "Hindi"].map((language) => (
+                      <label key={language} className="text-gray-400">
+                        <input
+                          type="checkbox"
+                          value={language}
+                          checked={filterLanguages.includes(language)}
+                          onChange={() => handleLanguageFilterChange(language)}
+                          className="mr-2"
+                        />
+                        {language}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Active Now */}
+                <div>
+                  <label className="text-white">Active Now</label>
+                  <div className="flex gap-2">
+                    <label className="text-gray-400">
                       <input
                         type="checkbox"
-                        value={location}
-                        checked={filterLocation.includes(location)}
-                        onChange={() => handleLocationFilterChange(location)}
+                        checked={isActive === true}
+                        onChange={() =>
+                          setIsActive(isActive === true ? null : true)
+                        }
                         className="mr-2"
                       />
-                      {location}
+                      Yes
                     </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Job Titles */}
-              <div>
-                <label className="text-white">Job Titles</label>
-                <div className="flex gap-2">
-                  {[
-                    "Flutter Developer",
-                    "React JS Developer",
-                    "WordPress Developer",
-                    "Graphic Designer",
-                  ].map((title) => (
-                    <label key={title} className="text-gray-400">
+                    <label className="text-gray-400">
                       <input
                         type="checkbox"
-                        value={title}
-                        checked={filterJobTitle.includes(title)}
-                        onChange={() => handleJobTitleFilterChange(title)}
+                        checked={isActive === false}
+                        onChange={() =>
+                          setIsActive(isActive === false ? null : false)
+                        }
                         className="mr-2"
                       />
-                      {title}
+                      No
                     </label>
-                  ))}
+                  </div>
                 </div>
               </div>
-
-              {/* Languages */}
-              <div>
-                <label className="text-white">Languages</label>
-                <div className="flex gap-2">
-                  {["English", "Arabic", "Hindi"].map((language) => (
-                    <label key={language} className="text-gray-400">
-                      <input
-                        type="checkbox"
-                        value={language}
-                        checked={filterLanguages.includes(language)}
-                        onChange={() => handleLanguageFilterChange(language)}
-                        className="mr-2"
-                      />
-                      {language}
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Active Now */}
-              <div>
-                <label className="text-white">Active Now</label>
-                <div className="flex gap-2">
-                  <label className="text-gray-400">
-                    <input
-                      type="checkbox"
-                      checked={isActive === true}
-                      onChange={() =>
-                        setIsActive(isActive === true ? null : true)
-                      }
-                      className="mr-2"
-                    />
-                    Yes
-                  </label>
-                  <label className="text-gray-400">
-                    <input
-                      type="checkbox"
-                      checked={isActive === false}
-                      onChange={() =>
-                        setIsActive(isActive === false ? null : false)
-                      }
-                      className="mr-2"
-                    />
-                    No
-                  </label>
-                </div>
-              </div>
-            </div>
+            )}
           </div>
 
           {/* Job Listings */}
@@ -257,14 +244,20 @@ const RecruitmentPage: React.FC = () => {
               filteredJobs.map((job) => (
                 <div
                   key={job.id}
-                  className="bg-gray-800 border border-gray-600 p-4 rounded-lg hover:bg-gray-700 transition"
+                  className="bg-gray-800 border border-gray-700 rounded-lg p-4"
                 >
-                  <h2 className="text-2xl font-bold text-white">{job.title}</h2>
-                  <p className="text-gray-300">{job.shortDescription}</p>
-                  <div className="mt-4 flex gap-4">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <h3 className="text-xl font-semibold text-white">
+                        {job.title}
+                      </h3>
+                      <p className="text-sm text-gray-400">
+                        {job.shortDescription}
+                      </p>
+                    </div>
                     <button
                       onClick={() => openModal(job)}
-                      className="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg"
+                      className="bg-blue-600 text-white py-2 px-4 rounded-lg"
                     >
                       View Details
                     </button>
@@ -272,66 +265,65 @@ const RecruitmentPage: React.FC = () => {
                 </div>
               ))
             ) : (
-              <p className="text-white">No job postings found.</p>
+              <p className="text-center text-white">No job posts found.</p>
             )}
           </div>
-
-          {/* Modal */}
-          {isModalOpen && selectedJob && (
-            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-              <div className="bg-gray-800 p-6 rounded-lg w-full max-w-lg">
-                <h2 className="text-3xl font-bold text-white">
-                  {selectedJob.title}
-                </h2>
-                <p className="text-gray-400">{selectedJob.fullDescription}</p>
-                <div className="mt-4">
-                  <h3 className="text-lg font-semibold text-white">Details:</h3>
-                  <p className="text-gray-300">
-                    <FaMapMarkerAlt className="inline mr-2" />
-                    Location: {selectedJob.location}
-                  </p>
-                  <p className="text-gray-300">
-                    <FaRegEnvelope className="inline mr-2" />
-                    Email: info@p18fitness.com
-                  </p>
-                  <p className="text-gray-300">
-                    <FaWhatsapp className="inline mr-2" />
-                    WhatsApp: +1234567890
-                  </p>
-                  <p className="text-gray-300">
-                    <FaTag className="inline mr-2" />
-                    Job Type: {selectedJob.jobType}
-                  </p>
-                  <p className="text-gray-300">
-                    <BsFillPersonFill className="inline mr-2" />
-                    Skills: {selectedJob.skills.join(", ")}
-                  </p>
-                </div>
-                <div className="mt-4 flex gap-4">
-                  <button
-                    onClick={() => handleApply("Email")}
-                    className="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg"
-                  >
-                    Apply via Email
-                  </button>
-                  <button
-                    onClick={() => handleApply("WhatsApp")}
-                    className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg"
-                  >
-                    Apply via WhatsApp
-                  </button>
-                </div>
-                <button
-                  onClick={closeModal}
-                  className="mt-4 text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          )}
         </div>
       </div>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
+          onClick={closeModal}
+        >
+          <div
+            className="bg-gray-800 text-white rounded-lg p-8 max-w-lg w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 className="text-2xl font-semibold mb-4">
+              {selectedJob?.title}
+            </h2>
+            <p className="text-sm mb-4">{selectedJob?.fullDescription}</p>
+            <div className="flex gap-4 mb-4">
+              <div className="flex items-center">
+                <FaMapMarkerAlt className="mr-2" />
+                {selectedJob?.location}
+              </div>
+              <div className="flex items-center">
+                <FaRegEnvelope className="mr-2" />
+                {selectedJob?.languages.join(", ")}
+              </div>
+              <div className="flex items-center">
+                <FaTag className="mr-2" />
+                {selectedJob?.skills.join(", ")}
+              </div>
+            </div>
+            <div className="flex gap-4 mb-4">
+              <Link
+                href="https://www.linkedin.com"
+                className="bg-blue-600 text-white py-2 px-4 rounded-lg"
+                target="_blank"
+              >
+                Apply on LinkedIn
+              </Link>
+              <button
+                onClick={() => handleApply("WhatsApp")}
+                className="bg-green-600 text-white py-2 px-4 rounded-lg flex items-center"
+              >
+                <FaWhatsapp className="mr-2" />
+                Apply via WhatsApp
+              </button>
+            </div>
+            <button
+              onClick={closeModal}
+              className="text-red-500 hover:text-red-400"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
 
       <ToastContainer />
     </section>
