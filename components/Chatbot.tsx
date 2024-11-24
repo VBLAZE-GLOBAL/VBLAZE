@@ -84,7 +84,7 @@ const Chatbot = () => {
                     Meet our UAE Team
                   </button>
                   <button onClick={() => selectOption("marketing")}>
-                    Meat our IND Team
+                    Meet our IND Team
                   </button>
                   <br></br>
                   <p className="text-gray-400">
