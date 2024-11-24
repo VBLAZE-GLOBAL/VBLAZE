@@ -114,9 +114,9 @@ export default function ProjectPage() {
   // Ras Shopping Project data
   const project = {
     screenshots: [
-      "/images/projects/ecommerce1.png",
-      "/images/projects/ecommerce2.png",
-      "/images/projects/ecommerce3.png",
+      "/images/projects/error.png",
+      "/images/projects/error.png",
+      "/images/projects/error.png",
     ],
     name: "Ras Shopping - E-commerce ReactJS Website",
     shortDescription:

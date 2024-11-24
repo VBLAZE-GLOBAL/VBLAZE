@@ -114,9 +114,9 @@ export default function ProjectPage() {
   // Hospital Management System (RHMS) data
   const project = {
     screenshots: [
-      "/images/projects/hospital1.png",
-      "/images/projects/hospital2.png",
-      "/images/projects/hospital3.png",
+      "/images/projects/error.png",
+      "/images/projects/error.png",
+      "/images/projects/error.png",
     ],
     name: "RHMS - Hospital Management System",
     shortDescription:

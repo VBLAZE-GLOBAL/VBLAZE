@@ -114,9 +114,9 @@ export default function ProjectPage() {
   // Mock data for Jovoy Branded Perfumes eCommerce website
   const project = {
     screenshots: [
-      "/images/projects/jovoy1.png",
-      "/images/projects/jovoy2.png",
-      "/images/projects/jovoy3.png",
+      "/images/projects/error.png",
+      "/images/projects/error.png",
+      "/images/projects/error.png",
     ],
     name: "Jovoy Branded Perfumes",
     shortDescription:

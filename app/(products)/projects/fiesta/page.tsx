@@ -114,9 +114,9 @@ export default function ProjectPage() {
   // Mock data for Fiesta Tech Fest
   const project = {
     screenshots: [
-      "/images/projects/fest1.png",
-      "/images/projects/fest2.png",
-      "/images/projects/fest3.png",
+      "/images/projects/error.png",
+      "/images/projects/error.png",
+      "/images/projects/error.png",
     ],
     name: "Fiesta Tech Fest",
     shortDescription:

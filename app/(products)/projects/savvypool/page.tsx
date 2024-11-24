@@ -114,9 +114,9 @@ export default function ProjectPage() {
   // Mock data for SavvyPool platform (e-learning and offline courses)
   const project = {
     screenshots: [
-      "/images/projects/savvypool1.png",
-      "/images/projects/savvypool2.png",
-      "/images/projects/savvypool3.png",
+      "/images/projects/error.png",
+      "/images/projects/error.png",
+      "/images/projects/error.png",
     ],
     name: "SavvyPool",
     shortDescription:

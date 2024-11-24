@@ -114,9 +114,9 @@ export default function ProjectPage() {
   // Mock data for Royal Boutique Branded Perfumes eCommerce website
   const project = {
     screenshots: [
-      "/images/projects/royal-boutique1.png",
-      "/images/projects/royal-boutique2.png",
-      "/images/projects/royal-boutique3.png",
+      "/images/projects/error.png",
+      "/images/projects/error.png",
+      "/images/projects/error.png",
     ],
     name: "Royal Boutique Branded Perfumes",
     shortDescription:
