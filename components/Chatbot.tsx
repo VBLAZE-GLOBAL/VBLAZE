@@ -19,10 +19,10 @@ const Chatbot = () => {
 
     if (option === "developers") {
       botMessage =
-        'Connect with our UAE team. You can reach us on WhatsApp: <a href="https://wa.me/+971558291800?text=Hey%20Team%20VBLAZE" target="_blank">Thank you</a>';
+        'Connect with our UAE team. You can reach us on WhatsApp: <a href="https://wa.me/+971558291800?text=Hey%20Team%20VBLAZE" target="_blank">Chat with us</a> Thank you';
     } else if (option === "marketing") {
       botMessage =
-        'Connect with our IND team. You can reach us on WhatsApp: <a href="https://wa.me/+918113000155?text=Hey%20Team%20VBLAZE" target="_blank">Thank uou</a>';
+        'Connect with our IND team. You can reach us on WhatsApp: <a href="https://wa.me/+918113000155?text=Hey%20Team%20VBLAZE" target="_blank">Chat with us</a> Thank you';
     }
 
     setMessage(botMessage);
