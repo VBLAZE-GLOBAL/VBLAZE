@@ -39,8 +39,9 @@ const nacelle = localFont({
 });
 
 export const metadata = {
-  title: "VBLAZE",
-  description: "INNOVATE - CODE - DELIVER",
+  title: "VBLAZE GLOBAL - INNOVATE. CODE. DELIVER",
+  description:
+    "VBLAZE GLOBAL: INNOVATE. CODE. DELIVER. Your trusted partner for IT solutions, including AI, VR, Web Development, Laravel, and more.",
 };
 
 export default function RootLayout({
