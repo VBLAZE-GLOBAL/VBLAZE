@@ -90,6 +90,11 @@ export default function Careers() {
             </div>
           </div>
         </div>
+        <script
+          id="chatbotkit-widget"
+          src="https://static.chatbotkit.com/integrations/widget/v2.js"
+          data-widget="cm3ygeox708bl2hqc7cmpa1c4"
+        ></script>
       </div>
     </section>
   );
