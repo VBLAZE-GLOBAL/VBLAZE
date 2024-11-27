@@ -264,6 +264,11 @@ export default function ProjectPage() {
           ))}
         </div>
       </Section> */}
+      <script
+        id="chatbotkit-widget"
+        src="https://static.chatbotkit.com/integrations/widget/v2.js"
+        data-widget="cm3ygeox708bl2hqc7cmpa1c4"
+      ></script>
 
       <Section title="Client Feedback" content="What Our Clients Say">
         <p className="italic text-white/80">{project.clientFeedback}</p>

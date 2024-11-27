@@ -247,6 +247,11 @@ export default function ProjectsArchivePage() {
       </div>
       <br />
       <br />
+      <script
+        id="chatbotkit-widget"
+        src="https://static.chatbotkit.com/integrations/widget/v2.js"
+        data-widget="cm3ygeox708bl2hqc7cmpa1c4"
+      ></script>
     </section>
   );
 }
