@@ -1,9 +1,11 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimesCircle } from "@fortawesome/free-solid-svg-icons"; // Import the "X" icon
 
 export default function Careers() {
   return (
-    <section className="relative overflow-hidden bg-gray-900 py-20">
-      <div className="absolute inset-0 -z-10 bg-indigo-500/50 opacity-75"></div>
+    <section className="relative overflow-hidden bg-gray-900 py-20 min-h-screen">
+      <div className="absolute inset-0 -z-10 bg-indigo-500/50 opacity-75 bg-cover"></div>
 
       <div className="container mx-auto px-6">
         <div className="pb-12 text-center">
@@ -28,6 +30,13 @@ export default function Careers() {
                   We're looking for a front-end engineer to create modern and
                   interactive user interfaces.
                 </p>
+                <div className="flex items-center mt-4 text-red-500">
+                  <FontAwesomeIcon
+                    icon={faTimesCircle}
+                    className="h-5 w-5 mr-2"
+                  />
+                  <span className="text-sm">Not Available</span>
+                </div>
                 <a
                   href="https://www.linkedin.com/company/vblaze/jobs"
                   className="mt-4 inline-block rounded-lg bg-indigo-600 px-6 py-2 text-white text-sm font-semibold hover:bg-indigo-700"
@@ -54,6 +63,13 @@ export default function Careers() {
                   We're looking for a back-end engineer to build robust and
                   scalable systems.
                 </p>
+                <div className="flex items-center mt-4 text-red-500">
+                  <FontAwesomeIcon
+                    icon={faTimesCircle}
+                    className="h-5 w-5 mr-2"
+                  />
+                  <span className="text-sm">Not Available</span>
+                </div>
                 <a
                   href="https://www.linkedin.com/company/vblaze/jobs"
                   className="mt-4 inline-block rounded-lg bg-indigo-600 px-6 py-2 text-white text-sm font-semibold hover:bg-indigo-700"
@@ -80,6 +96,13 @@ export default function Careers() {
                   We need a product manager to guide our projects from concept
                   to completion.
                 </p>
+                <div className="flex items-center mt-4 text-red-500">
+                  <FontAwesomeIcon
+                    icon={faTimesCircle}
+                    className="h-5 w-5 mr-2"
+                  />
+                  <span className="text-sm">Not Available</span>
+                </div>
                 <a
                   href="https://www.linkedin.com/company/vblaze/jobs"
                   className="mt-4 inline-block rounded-lg bg-indigo-600 px-6 py-2 text-white text-sm font-semibold hover:bg-indigo-700"
