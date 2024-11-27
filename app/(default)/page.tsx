@@ -3,7 +3,7 @@ import Hero from "@/components/hero-home";
 import Workflows from "@/components/workflows";
 import Features from "@/components/features";
 import Cta from "@/components/cta";
-import Chatbot from "@/components/Chatbot";
+import ChatPopup from "@/components/ChatPopup";
 import ClientLogos from "@/components/ClientLogos";
 import GoogleDeveloperBadges from "@/components/GoogleDeveloperBadges";
 export default function Home() {
@@ -91,6 +91,7 @@ export default function Home() {
       <Workflows />
       <Features />
       <Cta />
+      <ChatPopup />
     </>
   );
 }
