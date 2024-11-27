@@ -172,7 +172,7 @@ export default function ChatPopup() {
   const [messages, setMessages] = React.useState<Message[]>([
     {
       id: "1",
-      content: "Hello! I'm VAIA, your AI assistant. How can I help you today?",
+      content: "Hello! I'm VBAI, your AI assistant. How can I help you today?",
       type: "bot",
       options: [
         "AI Solutions",
@@ -296,7 +296,7 @@ export default function ChatPopup() {
                   </div>
                   <div>
                     <h2 className="text-xl font-bold text-white">
-                      VAIA Assistant
+                      VBAI Assistant
                     </h2>
                     <p className="text-sm text-white/80">AI-Powered Support</p>
                   </div>
