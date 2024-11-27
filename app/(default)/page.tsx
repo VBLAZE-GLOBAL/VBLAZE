@@ -91,7 +91,6 @@ export default function Home() {
       <Workflows />
       <Features />
       <Cta />
-      <Chatbot />
     </>
   );
 }
