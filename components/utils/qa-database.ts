@@ -36,7 +36,7 @@ export const qaDatabase: QA[] = [
     keywords: ["Digital Marketing", "SEO", "Social Media"],
   },
   {
-    question: "How can AI chatbots benefit my business?",
+    question: "Ask Another Question",
     answer:
       "AI chatbots can provide 24/7 customer support, automate routine inquiries, gather customer insights, and improve response times. Our custom chatbot solutions are designed to integrate seamlessly with your existing systems and can be trained on your specific business domain.",
     keywords: ["AI Chatbot", "Customer Support", "Automation"],
