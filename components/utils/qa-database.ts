@@ -65,11 +65,11 @@ export function findAnswer(question: string): string {
 
 export const contactInfo = {
   UAE: {
-    phone: "+971 50 123 4567",
-    whatsapp: "https://wa.me/971501234567",
+    phone: "+971 55 829 1800",
+    whatsapp: "https://wa.me/971558291800",
   },
   India: {
-    phone: "+91 98765 43210",
-    whatsapp: "https://wa.me/919876543210",
+    phone: "+91 8113 000 155",
+    whatsapp: "https://wa.me/918113000155",
   },
 };
