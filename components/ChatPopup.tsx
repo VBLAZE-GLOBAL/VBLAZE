@@ -1,436 +1,478 @@
 "use client";
 
-import * as React from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Bot, X, Send, Maximize2, Minimize2 } from "lucide-react";
-import { findAnswer, contactInfo } from "@/components/utils/qa-database";
-import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/utils";
+import React, { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
+import { findAnswer } from "@/components/utils/qa-database";
 
-const buttonVariants = cva(
-  "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background",
-  {
-    variants: {
-      variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-      },
-      size: {
-        default: "h-10 py-2 px-4",
-        sm: "h-9 px-3 rounded-md",
-        lg: "h-11 px-8 rounded-md",
-        icon: "h-10 w-10",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  }
-);
-
-interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean;
+interface Option {
+  id: number;
+  label: string;
 }
-
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
-    return (
-      <button
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
-      />
-    );
-  }
-);
-Button.displayName = "Button";
-
-const Card = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "rounded-lg border bg-card text-card-foreground shadow-sm",
-      className
-    )}
-    {...props}
-  />
-));
-Card.displayName = "Card";
-
-const CardHeader = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("flex flex-col space-y-1.5 p-6", className)}
-    {...props}
-  />
-));
-CardHeader.displayName = "CardHeader";
-
-const CardContent = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
-));
-CardContent.displayName = "CardContent";
-
-const CardFooter = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("flex items-center p-6 pt-0", className)}
-    {...props}
-  />
-));
-CardFooter.displayName = "CardFooter";
-
-const Input = React.forwardRef<
-  HTMLInputElement,
-  React.InputHTMLAttributes<HTMLInputElement>
->(({ className, type, ...props }, ref) => {
-  return (
-    <input
-      type={type}
-      className={cn(
-        "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-        className
-      )}
-      ref={ref}
-      {...props}
-    />
-  );
-});
-Input.displayName = "Input";
-
-const Avatar = React.forwardRef<
-  HTMLSpanElement,
-  React.HTMLAttributes<HTMLSpanElement>
->(({ className, ...props }, ref) => (
-  <span
-    ref={ref}
-    className={cn(
-      "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
-      className
-    )}
-    {...props}
-  />
-));
-Avatar.displayName = "Avatar";
-
-const AvatarImage = React.forwardRef<
-  HTMLImageElement,
-  React.ImgHTMLAttributes<HTMLImageElement>
->(({ className, ...props }, ref) => (
-  <img
-    ref={ref}
-    className={cn("aspect-square h-full w-full", className)}
-    {...props}
-  />
-));
-AvatarImage.displayName = "AvatarImage";
-
-const AvatarFallback = React.forwardRef<
-  HTMLSpanElement,
-  React.HTMLAttributes<HTMLSpanElement>
->(({ className, ...props }, ref) => (
-  <span
-    ref={ref}
-    className={cn(
-      "flex h-full w-full items-center justify-center rounded-full bg-muted",
-      className
-    )}
-    {...props}
-  />
-));
-AvatarFallback.displayName = "AvatarFallback";
 
 interface Message {
-  id: string;
-  content: string;
   type: "user" | "bot";
-  options?: string[];
+  content: string;
+  attachment?: boolean;
+  options?: Option[];
+  explanation?: string;
 }
 
-export default function ChatPopup() {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [isMinimized, setIsMinimized] = React.useState(false);
-  const [messages, setMessages] = React.useState<Message[]>([
-    {
-      id: "1",
-      content: "Hello! I'm VBAI, your AI assistant. How can I help you today?",
-      type: "bot",
-      options: [
-        "AI Solutions",
-        "VR Development",
-        "UI/UX Design",
-        "App Development",
-        "Digital Marketing",
-      ],
-    },
-  ]);
-  const [inputValue, setInputValue] = React.useState("");
-  const [isTyping, setIsTyping] = React.useState(false);
-  const messagesEndRef = React.useRef<HTMLDivElement>(null);
+const TypingAnimation: React.FC = () => (
+  <div className="flex space-x-2 p-3 bg-gray-100 rounded-lg w-16">
+    <div className="w-2 h-2 bg-gray-400 rounded-full animate-[bounce_1s_infinite_0ms]"></div>
+    <div className="w-2 h-2 bg-gray-400 rounded-full animate-[bounce_1s_infinite_200ms]"></div>
+    <div className="w-2 h-2 bg-gray-400 rounded-full animate-[bounce_1s_infinite_400ms]"></div>
+  </div>
+);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+const RelatedQuestions: React.FC<{
+  questions: string[];
+  onSelect: (question: string) => void;
+}> = ({ questions, onSelect }) => (
+  <div className="mb-2 space-y-1">
+    {questions.map((question, index) => (
+      <button
+        key={index}
+        onClick={() => onSelect(question)}
+        className="text-sm text-indigo-600 hover:text-indigo-800 transition-colors"
+      >
+        {question}
+      </button>
+    ))}
+  </div>
+);
 
-  React.useEffect(() => {
+const ChatPopup: React.FC = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [inputValue, setInputValue] = useState<string>("");
+  const [isTyping, setIsTyping] = useState<boolean>(false);
+  const [unreadCount, setUnreadCount] = useState<number>(0);
+  const [showOptions, setShowOptions] = useState<boolean>(true);
+  const [relatedQuestions, setRelatedQuestions] = useState<string[]>([]);
+
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const audioContext = useRef<AudioContext | null>(null);
+
+  const initialOptions: Option[] = [
+    { id: 1, label: "AI Solutions" },
+    { id: 2, label: "VR Development" },
+    { id: 3, label: "UI/UX Design" },
+    { id: 4, label: "App Development" },
+    { id: 5, label: "Digital Marketing" },
+  ];
+
+  useEffect(() => {
+    if (messages.length === 0) {
+      simulateBotResponse({
+        type: "bot",
+        content:
+          "Hello! I'm Vyba AI, your AI assistant. How can I help you today?",
+        options: initialOptions,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
-  const handleSend = () => {
-    if (!inputValue.trim()) return;
-
-    const newMessage: Message = {
-      id: Date.now().toString(),
-      content: inputValue,
-      type: "user",
-    };
-
-    setMessages((prev) => [...prev, newMessage]);
-    setInputValue("");
-    setIsTyping(true);
-
-    setTimeout(() => {
-      const botResponse: Message = {
-        id: (Date.now() + 1).toString(),
-        content: findAnswer(inputValue),
-        type: "bot",
-        options: ["Book Consultation", "Contact Sales", "Explore Services"],
-      };
-      setMessages((prev) => [...prev, botResponse]);
-      setIsTyping(false);
-    }, 1500);
+  const scrollToBottom = (): void => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleOptionClick = (option: string) => {
-    const newMessage: Message = {
-      id: Date.now().toString(),
-      content: option,
-      type: "user",
-    };
-    setMessages((prev) => [...prev, newMessage]);
-
-    if (option === "Book Consultation") {
-      window.location.href = "https://www.vblaze.org/schedule";
-      return;
+  const playSound = (type: "incoming" | "outgoing") => {
+    if (!audioContext.current) {
+      audioContext.current = new (window.AudioContext ||
+        (window as any).webkitAudioContext)();
     }
 
-    if (option === "Contact Sales") {
-      const botResponse: Message = {
-        id: (Date.now() + 1).toString(),
-        content: "Please select your region to connect with our sales team:",
-        type: "bot",
-        options: ["UAE Team", "Indian Team"],
-      };
-      setMessages((prev) => [...prev, botResponse]);
-      return;
-    }
+    const oscillator = audioContext.current.createOscillator();
+    const gainNode = audioContext.current.createGain();
 
-    if (option === "UAE Team") {
-      window.location.href = contactInfo.UAE.whatsapp;
-      return;
-    }
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.current.destination);
 
-    if (option === "Indian Team") {
-      window.location.href = contactInfo.India.whatsapp;
-      return;
-    }
+    oscillator.type = "sine";
+    oscillator.frequency.setValueAtTime(
+      type === "incoming" ? 440 : 520,
+      audioContext.current.currentTime
+    );
+    gainNode.gain.setValueAtTime(0, audioContext.current.currentTime);
+    gainNode.gain.linearRampToValueAtTime(
+      0.5,
+      audioContext.current.currentTime + 0.1
+    );
+    gainNode.gain.linearRampToValueAtTime(
+      0,
+      audioContext.current.currentTime + 0.2
+    );
 
+    oscillator.start();
+    oscillator.stop(audioContext.current.currentTime + 0.2);
+  };
+
+  const simulateBotResponse = async (response: Message): Promise<void> => {
     setIsTyping(true);
-    setTimeout(() => {
-      const botResponse: Message = {
-        id: (Date.now() + 1).toString(),
-        content: findAnswer(option),
-        type: "bot",
-        options: ["Book Consultation", "Contact Sales", "Ask Another Question"],
+    await new Promise((resolve) =>
+      setTimeout(resolve, 1000 + Math.random() * 1000)
+    );
+    setIsTyping(false);
+    setMessages((prev) => [...prev, response]);
+    playSound("incoming");
+
+    if (!isOpen) {
+      setUnreadCount((prev) => prev + 1);
+    }
+
+    // Generate related questions
+    const newRelatedQuestions = generateRelatedQuestions(response.content);
+    setRelatedQuestions(newRelatedQuestions);
+  };
+
+  const handleSend = async (): Promise<void> => {
+    if (inputValue.trim()) {
+      const userMessage: Message = {
+        type: "user",
+        content: inputValue,
       };
-      setMessages((prev) => [...prev, botResponse]);
-      setIsTyping(false);
-    }, 1500);
+
+      setMessages((prev) => [...prev, userMessage]);
+      setInputValue("");
+      setShowOptions(false);
+      playSound("outgoing");
+
+      const answer = findAnswer(inputValue);
+      const botResponse: Message = {
+        type: "bot",
+        content: answer,
+        options: [
+          { id: 1, label: "Book a Consultation" },
+          { id: 2, label: "Contact Sales" },
+          { id: 3, label: "Ask Another Question" },
+        ],
+        explanation: `It provides more context and details about the topic.`,
+      };
+
+      await simulateBotResponse(botResponse);
+    }
+  };
+
+  const handleOptionClick = async (option: Option): Promise<void> => {
+    const userMessage: Message = {
+      type: "user",
+      content: option.label,
+    };
+
+    setMessages((prev) => [...prev, userMessage]);
+    setShowOptions(false);
+    playSound("outgoing");
+
+    let botResponse: Message;
+
+    switch (option.label) {
+      case "Contact Sales":
+        botResponse = {
+          type: "bot",
+          content: "Which country are you from?",
+          options: [
+            { id: 1, label: "UAE" },
+            { id: 2, label: "India" },
+          ],
+        };
+        break;
+      case "Book a Consultation":
+        window.location.href = "https://vblaze.org/schedule";
+        return;
+      case "Ask Another Question":
+        botResponse = {
+          type: "bot",
+          content:
+            "Hello! I'm Vyba AI, your AI assistant. How can I help you today?",
+          options: initialOptions,
+        };
+        break;
+      case "UAE":
+        window.location.href = "https://wa.me/+971XXXXXXXXX";
+        return;
+      case "India":
+        window.location.href = "https://wa.me/+91XXXXXXXXXX";
+        return;
+      default:
+        const answer = findAnswer(option.label);
+        botResponse = {
+          type: "bot",
+          content: answer,
+          options: [
+            { id: 1, label: "Book a Consultation" },
+            { id: 2, label: "Contact Sales" },
+            { id: 3, label: "Ask Another Question" },
+          ],
+          explanation: `It provides more context and details about the topic.`,
+        };
+    }
+
+    await simulateBotResponse(botResponse);
+  };
+
+  const handleOpen = (): void => {
+    setIsOpen(true);
+    setUnreadCount(0);
+  };
+
+  const handleFileUpload = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const userMessage: Message = {
+        type: "user",
+        content: `Attached file: ${file.name}`,
+        attachment: true,
+      };
+      setMessages((prev) => [...prev, userMessage]);
+      playSound("outgoing");
+    }
+  };
+
+  const handleKeyPress = (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ): void => {
+    if (event.key === "Enter") {
+      handleSend();
+    }
+  };
+
+  const generateRelatedQuestions = (content: string): string[] => {
+    // This is a placeholder function. In a real application, you would use
+    // more sophisticated methods to generate related questions.
+    const questions = [
+      "Can you provide more details?",
+      "How does this compare to other solutions?",
+      "What are the benefits of this approach?",
+      "Are there any case studies available?",
+      "What's the typical timeline for implementation?",
+    ];
+    return questions.slice(0, 3); // Return 3 random questions
+  };
+
+  const handleRelatedQuestionClick = (question: string) => {
+    setInputValue(question);
+    handleSend();
   };
 
   return (
-    <>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm"
+    <div className="fixed bottom-6 right-6 flex flex-col items-end z-50">
+      <div
+        className={`mb-4 bg-white rounded-lg shadow-2xl w-96 max-w-[calc(100vw-2rem)] transition-all duration-300 transform ${
+          isOpen
+            ? "scale-100 opacity-100"
+            : "scale-95 opacity-0 pointer-events-none"
+        }`}
+      >
+        <div className="bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-400 rounded-t-lg p-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+              <svg
+                className="w-6 h-6 text-white"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M12 2C6.48 2 2 6.48 2 12c0 5.52 4.48 10 10 10 1.05 0 2.07-.17 3.02-.47L20 24l-1.53-4.89C20.04 17.23 22 14.79 22 12c0-5.52-4.48-10-10-10zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-white font-semibold">Vyba AI</h3>
+              <p className="text-white/80 text-sm">AI-Powered Support</p>
+            </div>
+          </div>
+          <button
+            onClick={() => setIsOpen(false)}
+            className="text-white/80 hover:text-white transition-colors"
           >
-            <Card
-              className={`w-full max-w-4xl h-[90vh] flex flex-col overflow-hidden ${
-                isMinimized ? "h-[60px]" : ""
+            <svg
+              className="w-6 h-6"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="h-96 overflow-y-auto p-4 space-y-4">
+          {messages.map((message, index) => (
+            <div
+              key={index}
+              className={`flex ${
+                message.type === "user" ? "justify-end" : "justify-start"
               }`}
             >
-              <CardHeader className="flex flex-row items-center justify-between p-4 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-t-lg">
-                <div className="flex items-center gap-3">
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-white rounded-full" />
-                    <Avatar className="w-12 h-12 border-2 border-white">
-                      <AvatarImage
-                        src="https://i.postimg.cc/9Mr6M4tm/bot.png"
-                        alt="AI Assistant"
-                      />
-                      <AvatarFallback>AI</AvatarFallback>
-                    </Avatar>
-                  </div>
-                  <div>
-                    <h2 className="text-xl font-bold text-white">
-                      VBAI Assistant
-                    </h2>
-                    <p className="text-sm text-white/80">AI-Powered Support</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="text-white hover:text-white/80"
-                    onClick={() => setIsMinimized(!isMinimized)}
-                  >
-                    {isMinimized ? (
-                      <Maximize2 className="w-5 h-5" />
-                    ) : (
-                      <Minimize2 className="w-5 h-5" />
-                    )}
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="text-white hover:text-white/80"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <X className="w-5 h-5" />
-                  </Button>
-                </div>
-              </CardHeader>
-              {!isMinimized && (
-                <>
-                  <CardContent className="flex-1 p-4 overflow-y-auto bg-gray-50 dark:bg-gray-900">
-                    <div className="space-y-4">
-                      {messages.map((message) => (
-                        <div
-                          key={message.id}
-                          className={`flex ${
-                            message.type === "user"
-                              ? "justify-end"
-                              : "justify-start"
-                          }`}
-                        >
-                          {message.type === "bot" && (
-                            <div className="relative mr-3">
-                              <div className="absolute inset-0 bg-white rounded-full" />
-                              <Avatar className="w-8 h-8 border-2 border-white">
-                                <AvatarImage
-                                  src="https://i.postimg.cc/9Mr6M4tm/bot.png"
-                                  alt="AI Assistant"
-                                />
-                                <AvatarFallback>AI</AvatarFallback>
-                              </Avatar>
-                            </div>
-                          )}
-                          <div
-                            className={`max-w-[80%] rounded-2xl p-4 ${
-                              message.type === "user"
-                                ? "bg-blue-600 text-white"
-                                : "bg-white shadow-md dark:bg-gray-800"
-                            }`}
-                          >
-                            <p className="text-base leading-relaxed text-black dark:text-white">
-                              {message.content}
-                            </p>
-                            {message.options && (
-                              <div className="flex flex-wrap gap-2 mt-3">
-                                {message.options.map((option) => (
-                                  <Button
-                                    key={option}
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => handleOptionClick(option)}
-                                    className="text-sm font-medium bg-gray-100 text-black dark:bg-gray-700 dark:text-white border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-600"
-                                  >
-                                    {option}
-                                  </Button>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                      {isTyping && (
-                        <div className="flex items-center">
-                          <div className="relative mr-3">
-                            <div className="absolute inset-0 bg-white rounded-full" />
-                            <Avatar className="w-8 h-8 border-2 border-white">
-                              <AvatarImage
-                                src="https://i.postimg.cc/9Mr6M4tm/bot.png"
-                                alt="AI Assistant"
-                              />
-                              <AvatarFallback>AI</AvatarFallback>
-                            </Avatar>
-                          </div>
-                          <div className="bg-white shadow-md dark:bg-gray-800 rounded-2xl p-4">
-                            <div className="flex space-x-2">
-                              <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" />
-                              <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce delay-100" />
-                              <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce delay-200" />
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                      <div ref={messagesEndRef} />
-                    </div>
-                  </CardContent>
-                  <CardFooter className="p-4 border-t bg-white dark:bg-gray-900">
-                    <div className="flex w-full gap-2">
-                      <Input
-                        placeholder="Type your message..."
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        onKeyPress={(e) => e.key === "Enter" && handleSend()}
-                        className="flex-1 dark:bg-gray-800 dark:text-white dark:border-gray-700"
-                      />
-                      <Button
-                        onClick={handleSend}
-                        size="icon"
-                        className="w-12 h-12 rounded-full bg-blue-600 hover:bg-blue-700 text-white"
+              <div
+                className={`max-w-[80%] rounded-lg p-3 ${
+                  message.type === "user"
+                    ? "bg-gradient-to-r from-indigo-600 to-purple-400 text-white"
+                    : "bg-gray-100 text-gray-800"
+                } ${message.attachment ? "border border-gray-200" : ""}`}
+              >
+                <p>{message.content}</p>
+                {message.options && (
+                  <div className="mt-2 space-y-2">
+                    {message.options.map((option) => (
+                      <button
+                        key={option.id}
+                        onClick={() => handleOptionClick(option)}
+                        className="block w-full text-left px-3 py-2 rounded-md bg-white/10 hover:bg-white/20 transition-colors"
                       >
-                        <Send className="w-5 h-5" />
-                      </Button>
-                    </div>
-                  </CardFooter>
-                </>
-              )}
-            </Card>
-          </motion.div>
-        )}
-      </AnimatePresence>
-      <Button
-        className="fixed bottom-6 right-6 rounded-full w-16 h-16 bg-gradient-to-r from-blue-600 to-cyan-500 shadow-lg hover:shadow-xl transition-shadow"
-        onClick={() => setIsOpen(!isOpen)}
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+                {message.explanation && (
+                  <p className="mt-2 text-sm opacity-80">
+                    {message.explanation}
+                  </p>
+                )}
+              </div>
+            </div>
+          ))}
+
+          {isTyping && (
+            <div className="flex justify-start">
+              <TypingAnimation />
+            </div>
+          )}
+
+          <div ref={messagesEndRef} />
+        </div>
+
+        <div className="p-4 border-t">
+          <RelatedQuestions
+            questions={relatedQuestions}
+            onSelect={handleRelatedQuestionClick}
+          />
+          <div className="flex gap-2">
+            <label className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors">
+              <input
+                type="file"
+                className="hidden"
+                onChange={handleFileUpload}
+                accept="image/*,.pdf,.doc,.docx"
+              />
+              <svg
+                className="w-5 h-5 text-gray-600"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z" />
+              </svg>
+            </label>
+            <input
+              type="text"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Type your message..."
+              className="flex-1 px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:border-indigo-500"
+            />
+            <button
+              onClick={handleSend}
+              className="w-12 h-12 rounded-full bg-gradient-to-r from-indigo-600 to-purple-400 flex items-center justify-center text-white hover:shadow-lg transition-all duration-300"
+            >
+              <svg
+                className="w-6 h-6"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path
+                  d="M5 12h14M12 5l7 7-7 7"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <motion.button
+        onClick={handleOpen}
+        className="w-16 h-16 rounded-full bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-400 border-none cursor-pointer flex justify-center items-center shadow-lg hover:shadow-xl transition-all duration-300 relative"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
       >
-        {isOpen ? <X className="w-6 h-6" /> : <Bot className="w-6 h-6" />}
-      </Button>
-    </>
+        {unreadCount > 0 && (
+          <span className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+            {unreadCount}
+          </span>
+        )}
+        <svg className="w-8 h-8 fill-white" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12c0 5.52 4.48 10 10 10 1.05 0 2.07-.17 3.02-.47L20 24l-1.53-4.89C20.04 17.23 22 14.79 22 12c0-5.52-4.48-10-10-10zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+        </svg>
+      </motion.button>
+    </div>
   );
-}
+};
+
+export default ChatPopup;
+
+//command_tag
+// Add additional questions and answers here
+const additionalQA = [
+  {
+    question: "What is AI?",
+    answer:
+      "AI, or Artificial Intelligence, refers to the simulation of human intelligence in machines that are programmed to think and learn like humans.",
+    options: ["Machine Learning", "Neural Networks", "Expert Systems"],
+    explanation:
+      "AI encompasses various subfields including machine learning, neural networks, and expert systems. It's used in many applications from voice assistants to autonomous vehicles.",
+  },
+  {
+    question: "What services does V-Blaze offer in VR Development?",
+    answer: "V-Blaze offers comprehensive VR development services including:",
+    options: [
+      "VR App Development",
+      "360° VR Experiences",
+      "VR Game Development",
+    ],
+    explanation:
+      "Our VR development team creates immersive experiences for various industries including education, entertainment, and corporate training.",
+  },
+  {
+    question: "Can you explain V-Blaze's approach to UI/UX Design?",
+    answer:
+      "V-Blaze's UI/UX Design approach focuses on creating intuitive and engaging user experiences.",
+    options: ["User Research", "Wireframing", "Prototyping"],
+    explanation:
+      "We start with thorough user research, create wireframes and prototypes, and iterate based on user feedback to ensure the final design meets both user needs and business goals.",
+  },
+  {
+    question: "What app development services does V-Blaze provide?",
+    answer:
+      "V-Blaze offers comprehensive app development services for various platforms.",
+    options: [
+      "iOS Development",
+      "Android Development",
+      "Cross-platform Development",
+    ],
+    explanation:
+      "Our team of experienced developers creates high-quality, scalable applications using the latest technologies and best practices in mobile app development.",
+  },
+  {
+    question: "How can V-Blaze help with digital marketing?",
+    answer:
+      "V-Blaze provides a full suite of digital marketing services to help businesses grow their online presence.",
+    options: [
+      "SEO Optimization",
+      "Social Media Marketing",
+      "Content Marketing",
+    ],
+    explanation:
+      "We develop tailored digital marketing strategies that combine various techniques to increase your brand visibility, engage your target audience, and drive conversions.",
+  },
+];

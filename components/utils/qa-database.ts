@@ -36,7 +36,7 @@ export const qaDatabase: QA[] = [
     keywords: ["Digital Marketing", "SEO", "Social Media"],
   },
   {
-    question: "Ask Another Question",
+    question: "How can AI chatbots benefit my business?",
     answer:
       "AI chatbots can provide 24/7 customer support, automate routine inquiries, gather customer insights, and improve response times. Our custom chatbot solutions are designed to integrate seamlessly with your existing systems and can be trained on your specific business domain.",
     keywords: ["AI Chatbot", "Customer Support", "Automation"],
@@ -65,11 +65,11 @@ export function findAnswer(question: string): string {
 
 export const contactInfo = {
   UAE: {
-    phone: "+971 55 829 1800",
-    whatsapp: "https://wa.me/971558291800",
+    phone: "+971 50 123 4567",
+    whatsapp: "https://wa.me/971501234567",
   },
   India: {
-    phone: "+91 8113 000 155",
-    whatsapp: "https://wa.me/918113000155",
+    phone: "+91 98765 43210",
+    whatsapp: "https://wa.me/919876543210",
   },
 };
