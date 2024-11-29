@@ -6,7 +6,7 @@ interface QA {
 
 export const qaDatabase: QA[] = [
   {
-    question: "What AI solutions do you offer?",
+    question: "vblaze",
     answer:
       "We provide cutting-edge AI solutions including custom chatbots, machine learning models, natural language processing, computer vision systems, and AI-powered automation. Our AI solutions help businesses streamline operations, enhance customer experience, and gain valuable insights from data.",
     keywords: ["AI", "Machine Learning", "Automation"],
