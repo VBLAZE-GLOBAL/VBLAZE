@@ -308,10 +308,10 @@ const ChatPopup: React.FC = () => {
         };
         break;
       case "UAE":
-        window.location.href = "https://wa.me/+971XXXXXXXXX";
+        window.location.href = "https://wa.me/+971558291800";
         return;
       case "India":
-        window.location.href = "https://wa.me/+91XXXXXXXXXX";
+        window.location.href = "https://wa.me/+918113000155";
         return;
       default:
         const answer = findAnswer(option.label);
