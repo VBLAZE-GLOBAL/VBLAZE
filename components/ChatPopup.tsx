@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { findAnswer } from '@/utils/qa-database';
+import React, { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { findAnswer } from "@/components/utils/qa-database";
 
 interface Option {
   id: number;
@@ -10,7 +10,7 @@ interface Option {
 }
 
 interface Message {
-  type: 'user' | 'bot';
+  type: "user" | "bot";
   content: string;
   options?: Option[];
   explanation?: string;
@@ -24,7 +24,10 @@ const TypingAnimation: React.FC = () => (
   </div>
 );
 
-const RelatedQuestions: React.FC<{ questions: string[], onSelect: (question: string) => void }> = ({ questions, onSelect }) => (
+const RelatedQuestions: React.FC<{
+  questions: string[];
+  onSelect: (question: string) => void;
+}> = ({ questions, onSelect }) => (
   <div className="flex space-x-2 mb-2 overflow-x-auto pb-2">
     {questions.map((question, index) => (
       <button
@@ -39,11 +42,11 @@ const RelatedQuestions: React.FC<{ questions: string[], onSelect: (question: str
 );
 
 const AnimatedLogo: React.FC = () => {
-  const [animationState, setAnimationState] = useState<'dots' | 'icon'>("dots");
+  const [animationState, setAnimationState] = useState<"dots" | "icon">("dots");
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setAnimationState((prev) => (prev === 'dots' ? 'icon' : 'dots'));
+      setAnimationState((prev) => (prev === "dots" ? "icon" : "dots"));
     }, 3000);
 
     return () => clearInterval(interval);
@@ -52,7 +55,7 @@ const AnimatedLogo: React.FC = () => {
   return (
     <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center overflow-hidden">
       <AnimatePresence mode="wait">
-        {animationState === 'dots' ? (
+        {animationState === "dots" ? (
           <motion.div
             key="dots"
             className="flex space-x-1"
@@ -64,17 +67,31 @@ const AnimatedLogo: React.FC = () => {
             <motion.div
               className="w-2 h-2 bg-white rounded-full"
               animate={{ scale: [1, 1.5, 1] }}
-              transition={{ duration: 0.6, repeat: Infinity, repeatType: "loop" }}
+              transition={{
+                duration: 0.6,
+                repeat: Infinity,
+                repeatType: "loop",
+              }}
             />
             <motion.div
               className="w-2 h-2 bg-white rounded-full"
               animate={{ scale: [1, 1.5, 1] }}
-              transition={{ duration: 0.6, repeat: Infinity, repeatType: "loop", delay: 0.2 }}
+              transition={{
+                duration: 0.6,
+                repeat: Infinity,
+                repeatType: "loop",
+                delay: 0.2,
+              }}
             />
             <motion.div
               className="w-2 h-2 bg-white rounded-full"
               animate={{ scale: [1, 1.5, 1] }}
-              transition={{ duration: 0.6, repeat: Infinity, repeatType: "loop", delay: 0.4 }}
+              transition={{
+                duration: 0.6,
+                repeat: Infinity,
+                repeatType: "loop",
+                delay: 0.4,
+              }}
             />
           </motion.div>
         ) : (
@@ -86,7 +103,12 @@ const AnimatedLogo: React.FC = () => {
             initial={{ opacity: 0, rotate: -180, scale: 0.5 }}
             animate={{ opacity: 1, rotate: 0, scale: 1 }}
             exit={{ opacity: 0, rotate: 180, scale: 0.5 }}
-            transition={{ duration: 0.5, type: "spring", stiffness: 200, damping: 10 }}
+            transition={{
+              duration: 0.5,
+              type: "spring",
+              stiffness: 200,
+              damping: 10,
+            }}
           >
             <path d="M12 2C6.48 2 2 6.48 2 12c0 5.52 4.48 10 10 10 1.05 0 2.07-.17 3.02-.47L20 24l-1.53-4.89C20.04 17.23 22 14.79 22 12c0-5.52-4.48-10-10-10zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
           </motion.svg>
@@ -99,32 +121,35 @@ const AnimatedLogo: React.FC = () => {
 const ChatPopup: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [messages, setMessages] = useState<Message[]>([]);
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>("");
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [unreadCount, setUnreadCount] = useState<number>(0);
   const [showOptions, setShowOptions] = useState<boolean>(true);
   const [relatedQuestions, setRelatedQuestions] = useState<string[]>([]);
   const [lastActivityTime, setLastActivityTime] = useState<number>(Date.now());
-  const [fabAnimationState, setFabAnimationState] = useState<'dots' | 'icon'>('dots');
-  
+  const [fabAnimationState, setFabAnimationState] = useState<"dots" | "icon">(
+    "dots"
+  );
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatRef = useRef<HTMLDivElement>(null);
   const audioContext = useRef<AudioContext | null>(null);
 
   const initialOptions: Option[] = [
-    { id: 1, label: 'AI Solutions' },
-    { id: 2, label: 'VR Development' },
-    { id: 3, label: 'UI/UX Design' },
-    { id: 4, label: 'App Development' },
-    { id: 5, label: 'Digital Marketing' }
+    { id: 1, label: "AI Solutions" },
+    { id: 2, label: "VR Development" },
+    { id: 3, label: "UI/UX Design" },
+    { id: 4, label: "App Development" },
+    { id: 5, label: "Digital Marketing" },
   ];
 
   useEffect(() => {
     if (messages.length === 0) {
       simulateBotResponse({
-        type: 'bot',
-        content: "Hello! I'm Vyba AI, your AI assistant. How can I help you today?",
-        options: initialOptions
+        type: "bot",
+        content:
+          "Hello! I'm Vyba AI, your AI assistant. How can I help you today?",
+        options: initialOptions,
       });
     }
 
@@ -134,25 +159,26 @@ const ChatPopup: React.FC = () => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     const inactivityTimer = setInterval(() => {
-      if (Date.now() - lastActivityTime > 60000 && isOpen) { // 1 minute of inactivity
+      if (Date.now() - lastActivityTime > 60000 && isOpen) {
+        // 1 minute of inactivity
         simulateBotResponse({
-          type: 'bot',
+          type: "bot",
           content: "Is there anything else I can help you with?",
-          options: initialOptions
+          options: initialOptions,
         });
         setLastActivityTime(Date.now());
       }
     }, 60000);
 
     const fabAnimation = setInterval(() => {
-      setFabAnimationState((prev) => (prev === 'dots' ? 'icon' : 'dots'));
+      setFabAnimationState((prev) => (prev === "dots" ? "icon" : "dots"));
     }, 3000);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
       clearInterval(inactivityTimer);
       clearInterval(fabAnimation);
     };
@@ -163,12 +189,13 @@ const ChatPopup: React.FC = () => {
   }, [messages]);
 
   const scrollToBottom = (): void => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const playSound = (type: 'incoming' | 'outgoing') => {
+  const playSound = (type: "incoming" | "outgoing") => {
     if (!audioContext.current) {
-      audioContext.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+      audioContext.current = new (window.AudioContext ||
+        (window as any).webkitAudioContext)();
     }
 
     const oscillator = audioContext.current.createOscillator();
@@ -177,11 +204,20 @@ const ChatPopup: React.FC = () => {
     oscillator.connect(gainNode);
     gainNode.connect(audioContext.current.destination);
 
-    oscillator.type = 'sine';
-    oscillator.frequency.setValueAtTime(type === 'incoming' ? 440 : 520, audioContext.current.currentTime);
+    oscillator.type = "sine";
+    oscillator.frequency.setValueAtTime(
+      type === "incoming" ? 440 : 520,
+      audioContext.current.currentTime
+    );
     gainNode.gain.setValueAtTime(0, audioContext.current.currentTime);
-    gainNode.gain.linearRampToValueAtTime(0.5, audioContext.current.currentTime + 0.1);
-    gainNode.gain.linearRampToValueAtTime(0, audioContext.current.currentTime + 0.2);
+    gainNode.gain.linearRampToValueAtTime(
+      0.5,
+      audioContext.current.currentTime + 0.1
+    );
+    gainNode.gain.linearRampToValueAtTime(
+      0,
+      audioContext.current.currentTime + 0.2
+    );
 
     oscillator.start();
     oscillator.stop(audioContext.current.currentTime + 0.2);
@@ -190,13 +226,15 @@ const ChatPopup: React.FC = () => {
   const simulateBotResponse = async (response: Message): Promise<void> => {
     if (!isOpen) return;
     setIsTyping(true);
-    await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000));
+    await new Promise((resolve) =>
+      setTimeout(resolve, 1000 + Math.random() * 1000)
+    );
     setIsTyping(false);
-    setMessages(prev => [...prev, response]);
-    playSound('incoming');
-    
+    setMessages((prev) => [...prev, response]);
+    playSound("incoming");
+
     if (!isOpen) {
-      setUnreadCount(prev => prev + 1);
+      setUnreadCount((prev) => prev + 1);
     }
 
     const newRelatedQuestions = generateRelatedQuestions(response.content);
@@ -208,25 +246,25 @@ const ChatPopup: React.FC = () => {
     if (!isOpen) return;
     if (inputValue.trim()) {
       const userMessage: Message = {
-        type: 'user',
-        content: inputValue
+        type: "user",
+        content: inputValue,
       };
-      
-      setMessages(prev => [...prev, userMessage]);
-      setInputValue('');
+
+      setMessages((prev) => [...prev, userMessage]);
+      setInputValue("");
       setShowOptions(false);
-      playSound('outgoing');
+      playSound("outgoing");
 
       const answer = findAnswer(inputValue);
       const botResponse: Message = {
-        type: 'bot',
+        type: "bot",
         content: answer,
         options: [
-          { id: 1, label: 'Book a Consultation' },
-          { id: 2, label: 'Contact Sales' },
-          { id: 3, label: 'Ask Another Question' },
+          { id: 1, label: "Book a Consultation" },
+          { id: 2, label: "Contact Sales" },
+          { id: 3, label: "Ask Another Question" },
         ],
-        explanation: "It provides more context and details about the topic."
+        explanation: "It provides more context and details about the topic.",
       };
 
       await simulateBotResponse(botResponse);
@@ -237,54 +275,55 @@ const ChatPopup: React.FC = () => {
   const handleOptionClick = async (option: Option): Promise<void> => {
     if (!isOpen) return;
     const userMessage: Message = {
-      type: 'user',
-      content: option.label
+      type: "user",
+      content: option.label,
     };
-    
-    setMessages(prev => [...prev, userMessage]);
+
+    setMessages((prev) => [...prev, userMessage]);
     setShowOptions(false);
-    playSound('outgoing');
+    playSound("outgoing");
 
     let botResponse: Message;
 
     switch (option.label) {
-      case 'Contact Sales':
+      case "Contact Sales":
         botResponse = {
-          type: 'bot',
-          content: 'Which country are you from?',
+          type: "bot",
+          content: "Which country are you from?",
           options: [
-            { id: 1, label: 'UAE' },
-            { id: 2, label: 'India' },
+            { id: 1, label: "UAE" },
+            { id: 2, label: "India" },
           ],
         };
         break;
-      case 'Book a Consultation':
-        window.location.href = 'https://vblaze.org/schedule';
+      case "Book a Consultation":
+        window.location.href = "https://vblaze.org/schedule";
         return;
-      case 'Ask Another Question':
+      case "Ask Another Question":
         botResponse = {
-          type: 'bot',
-          content: "Hello! I'm Vyba AI, your AI assistant. How can I help you today?",
+          type: "bot",
+          content:
+            "Hello! I'm Vyba AI, your AI assistant. How can I help you today?",
           options: initialOptions,
         };
         break;
-      case 'UAE':
-        window.location.href = 'https://wa.me/+971XXXXXXXXX';
+      case "UAE":
+        window.location.href = "https://wa.me/+971XXXXXXXXX";
         return;
-      case 'India':
-        window.location.href = 'https://wa.me/+91XXXXXXXXXX';
+      case "India":
+        window.location.href = "https://wa.me/+91XXXXXXXXXX";
         return;
       default:
         const answer = findAnswer(option.label);
         botResponse = {
-          type: 'bot',
+          type: "bot",
           content: answer,
           options: [
-            { id: 1, label: 'Book a Consultation' },
-            { id: 2, label: 'Contact Sales' },
-            { id: 3, label: 'Ask Another Question' },
+            { id: 1, label: "Book a Consultation" },
+            { id: 2, label: "Contact Sales" },
+            { id: 3, label: "Ask Another Question" },
           ],
-          explanation: "It provides more context and details about the topic."
+          explanation: "It provides more context and details about the topic.",
         };
     }
 
@@ -299,8 +338,10 @@ const ChatPopup: React.FC = () => {
     setLastActivityTime(Date.now());
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>): void => {
-    if (event.key === 'Enter') {
+  const handleKeyPress = (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ): void => {
+    if (event.key === "Enter") {
       handleSend();
     }
   };
@@ -311,7 +352,7 @@ const ChatPopup: React.FC = () => {
       "How does this compare to other solutions?",
       "What are the benefits of this approach?",
       "Are there any case studies available?",
-      "What's the typical timeline for implementation?"
+      "What's the typical timeline for implementation?",
     ];
     return questions.slice(0, 3);
   };
@@ -323,13 +364,15 @@ const ChatPopup: React.FC = () => {
   };
 
   return (
-    <div 
+    <div
       ref={chatRef}
       className="fixed bottom-6 right-6 flex flex-col items-end z-[100]"
     >
       <div
         className={`mb-4 bg-white rounded-lg shadow-2xl w-[95vw] md:w-96 max-w-[calc(100vw-2rem)] transition-all duration-300 transform ${
-          isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none'
+          isOpen
+            ? "scale-100 opacity-100"
+            : "scale-95 opacity-0 pointer-events-none"
         }`}
       >
         <div className="bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 rounded-t-lg p-4 flex items-center justify-between">
@@ -340,11 +383,17 @@ const ChatPopup: React.FC = () => {
               <p className="text-white/80 text-sm">AI-Powered Support</p>
             </div>
           </div>
-          <button 
+          <button
             onClick={() => setIsOpen(false)}
             className="text-white/80 hover:text-white transition-colors"
           >
-            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              className="w-6 h-6"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <path d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
@@ -352,12 +401,17 @@ const ChatPopup: React.FC = () => {
 
         <div className="h-[35vh] md:h-[45vh] overflow-y-auto p-4 space-y-4">
           {messages.map((message, index) => (
-            <div key={index} className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
+            <div
+              key={index}
+              className={`flex ${
+                message.type === "user" ? "justify-end" : "justify-start"
+              }`}
+            >
               <div
                 className={`max-w-[80%] rounded-lg p-3 ${
-                  message.type === 'user'
-                    ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-800'
+                  message.type === "user"
+                    ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white"
+                    : "bg-gray-100 text-gray-800"
                 }`}
               >
                 <p>{message.content}</p>
@@ -375,23 +429,28 @@ const ChatPopup: React.FC = () => {
                   </div>
                 )}
                 {message.explanation && (
-                  <p className="mt-2 text-sm opacity-80">{message.explanation}</p>
+                  <p className="mt-2 text-sm opacity-80">
+                    {message.explanation}
+                  </p>
                 )}
               </div>
             </div>
           ))}
-          
+
           {isTyping && (
             <div className="flex justify-start">
               <TypingAnimation />
             </div>
           )}
-          
+
           <div ref={messagesEndRef} />
         </div>
 
         <div className="p-4 border-t">
-          <RelatedQuestions questions={relatedQuestions} onSelect={handleRelatedQuestionClick} />
+          <RelatedQuestions
+            questions={relatedQuestions}
+            onSelect={handleRelatedQuestionClick}
+          />
           <div className="flex gap-2">
             <input
               type="text"
@@ -405,8 +464,18 @@ const ChatPopup: React.FC = () => {
               onClick={handleSend}
               className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center text-white hover:shadow-lg transition-all duration-300"
             >
-              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round"/>
+              <svg
+                className="w-6 h-6"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path
+                  d="M5 12h14M12 5l7 7-7 7"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </button>
           </div>
@@ -420,7 +489,7 @@ const ChatPopup: React.FC = () => {
         whileTap={{ scale: 0.95 }}
       >
         <AnimatePresence mode="wait">
-          {fabAnimationState === 'dots' ? (
+          {fabAnimationState === "dots" ? (
             <motion.div
               key="dots"
               className="flex space-x-1"
@@ -432,17 +501,31 @@ const ChatPopup: React.FC = () => {
               <motion.div
                 className="w-2 h-2 bg-white rounded-full"
                 animate={{ scale: [1, 1.5, 1] }}
-                transition={{ duration: 0.6, repeat: Infinity, repeatType: "loop" }}
+                transition={{
+                  duration: 0.6,
+                  repeat: Infinity,
+                  repeatType: "loop",
+                }}
               />
               <motion.div
                 className="w-2 h-2 bg-white rounded-full"
                 animate={{ scale: [1, 1.5, 1] }}
-                transition={{ duration: 0.6, repeat: Infinity, repeatType: "loop", delay: 0.2 }}
+                transition={{
+                  duration: 0.6,
+                  repeat: Infinity,
+                  repeatType: "loop",
+                  delay: 0.2,
+                }}
               />
               <motion.div
                 className="w-2 h-2 bg-white rounded-full"
                 animate={{ scale: [1, 1.5, 1] }}
-                transition={{ duration: 0.6, repeat: Infinity, repeatType: "loop", delay: 0.4 }}
+                transition={{
+                  duration: 0.6,
+                  repeat: Infinity,
+                  repeatType: "loop",
+                  delay: 0.4,
+                }}
               />
             </motion.div>
           ) : (
@@ -454,7 +537,12 @@ const ChatPopup: React.FC = () => {
               initial={{ opacity: 0, rotate: -180, scale: 0.5 }}
               animate={{ opacity: 1, rotate: 0, scale: 1 }}
               exit={{ opacity: 0, rotate: 180, scale: 0.5 }}
-              transition={{ duration: 0.5, type: "spring", stiffness: 200, damping: 10 }}
+              transition={{
+                duration: 0.5,
+                type: "spring",
+                stiffness: 200,
+                damping: 10,
+              }}
             >
               <path d="M12 2C6.48 2 2 6.48 2 12c0 5.52 4.48 10 10 10 1.05 0 2.07-.17 3.02-.47L20 24l-1.53-4.89C20.04 17.23 22 14.79 22 12c0-5.52-4.48-10-10-10zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
             </motion.svg>
@@ -476,33 +564,53 @@ export default ChatPopup;
 const additionalQA = [
   {
     question: "What is AI?",
-    answer: "AI, or Artificial Intelligence, refers to the simulation of human intelligence in machines that are programmed to think and learn like humans.",
+    answer:
+      "AI, or Artificial Intelligence, refers to the simulation of human intelligence in machines that are programmed to think and learn like humans.",
     options: ["Machine Learning", "Neural Networks", "Expert Systems"],
-    explanation: "AI encompasses various subfields including machine learning, neural networks, and expert systems. It's used in many applications from voice assistants to autonomous vehicles."
+    explanation:
+      "AI encompasses various subfields including machine learning, neural networks, and expert systems. It's used in many applications from voice assistants to autonomous vehicles.",
   },
   {
     question: "What services does V-Blaze offer in VR Development?",
     answer: "V-Blaze offers comprehensive VR development services including:",
-    options: ["VR App Development", "360° VR Experiences", "VR Game Development"],
-    explanation: "Our VR development team creates immersive experiences for various industries including education, entertainment, and corporate training."
+    options: [
+      "VR App Development",
+      "360° VR Experiences",
+      "VR Game Development",
+    ],
+    explanation:
+      "Our VR development team creates immersive experiences for various industries including education, entertainment, and corporate training.",
   },
   {
     question: "Can you explain V-Blaze's approach to UI/UX Design?",
-    answer: "V-Blaze's UI/UX Design approach focuses on creating intuitive and engaging user experiences.",
+    answer:
+      "V-Blaze's UI/UX Design approach focuses on creating intuitive and engaging user experiences.",
     options: ["User Research", "Wireframing", "Prototyping"],
-    explanation: "We start with thorough user research, create wireframes and prototypes, and iterate based on user feedback to ensure the final design meets both user needs and business goals."
+    explanation:
+      "We start with thorough user research, create wireframes and prototypes, and iterate based on user feedback to ensure the final design meets both user needs and business goals.",
   },
   {
     question: "What app development services does V-Blaze provide?",
-    answer: "V-Blaze offers comprehensive app development services for various platforms.",
-    options: ["iOS Development", "Android Development", "Cross-platform Development"],
-    explanation: "Our team of experienced developers creates high-quality, scalable applications using the latest technologies and best practices in mobile app development."
+    answer:
+      "V-Blaze offers comprehensive app development services for various platforms.",
+    options: [
+      "iOS Development",
+      "Android Development",
+      "Cross-platform Development",
+    ],
+    explanation:
+      "Our team of experienced developers creates high-quality, scalable applications using the latest technologies and best practices in mobile app development.",
   },
   {
     question: "How can V-Blaze help with digital marketing?",
-    answer: "V-Blaze provides a full suite of digital marketing services to help businesses grow their online presence.",
-    options: ["SEO Optimization", "Social Media Marketing", "Content Marketing"],
-    explanation: "We develop tailored digital marketing strategies that combine various techniques to increase your brand visibility, engage your target audience, and drive conversions."
-  }
+    answer:
+      "V-Blaze provides a full suite of digital marketing services to help businesses grow their online presence.",
+    options: [
+      "SEO Optimization",
+      "Social Media Marketing",
+      "Content Marketing",
+    ],
+    explanation:
+      "We develop tailored digital marketing strategies that combine various techniques to increase your brand visibility, engage your target audience, and drive conversions.",
+  },
 ];
-
