@@ -366,7 +366,7 @@ const ChatPopup: React.FC = () => {
   return (
     <div
       ref={chatRef}
-      className="fixed bottom-6 right-6 flex flex-col items-end z-[100]"
+      className="fixed bottom-6 right-6 flex flex-col items-end z-[1]"
     >
       <div
         className={`mb-4 bg-white rounded-lg shadow-2xl w-[95vw] md:w-96 max-w-[calc(100vw-2rem)] transition-all duration-300 transform ${
