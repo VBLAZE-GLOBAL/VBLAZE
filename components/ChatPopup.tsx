@@ -297,39 +297,22 @@ const ChatPopup: React.FC = () => {
         };
         break;
       case "Book a Consultation":
-        window.open("https://vblaze.org/schedule", "_blank");
-        botResponse = {
-          type: "bot",
-          content:
-            "I have opened the scheduling page in a new tab for you. Is there anything else I can help you with?",
-          options: initialOptions,
-        };
-        break;
+        window.location.href = "https://vblaze.org/schedule";
+        return;
       case "Ask Another Question":
         botResponse = {
           type: "bot",
-          content: "Sure, I'm here to help. What would you like to know?",
+          content:
+            "Hello! I'm Vyba AI, your AI assistant. How can I help you today?",
           options: initialOptions,
         };
         break;
       case "UAE":
-        window.open("https://wa.me/+971558291800", "_blank");
-        botResponse = {
-          type: "bot",
-          content:
-            "I have opened WhatsApp for you to contact our UAE sales team. Is there anything else you need?",
-          options: initialOptions,
-        };
-        break;
+        window.location.href = "https://wa.me/+971XXXXXXXXX";
+        return;
       case "India":
-        window.open("https://wa.me/+91XXXXXXXXXX", "_blank");
-        botResponse = {
-          type: "bot",
-          content:
-            "I have opened WhatsApp for you to contact our India sales team. Can I help you with anything else?",
-          options: initialOptions,
-        };
-        break;
+        window.location.href = "https://wa.me/+91XXXXXXXXXX";
+        return;
       default:
         const answer = findAnswer(option.label);
         botResponse = {
@@ -383,14 +366,12 @@ const ChatPopup: React.FC = () => {
   return (
     <div
       ref={chatRef}
-      className={`fixed bottom-0 right-0 sm:bottom-6 sm:right-6 flex flex-col items-end ${
-        isOpen ? "z-[100]" : "z-[1]"
-      }`}
+      className="fixed bottom-6 right-6 flex flex-col items-end z-[100]"
     >
       <div
-        className={`bg-white rounded-t-lg sm:rounded-lg shadow-2xl w-full sm:w-[95vw] md:w-96 max-w-full sm:max-w-[calc(100vw-2rem)] transition-all duration-300 transform ${
+        className={`mb-4 bg-white rounded-lg shadow-2xl w-[95vw] md:w-96 max-w-[calc(100vw-2rem)] transition-all duration-300 transform ${
           isOpen
-            ? "scale-100 opacity-100 h-[100vh] sm:h-auto"
+            ? "scale-100 opacity-100"
             : "scale-95 opacity-0 pointer-events-none"
         }`}
       >
@@ -418,7 +399,7 @@ const ChatPopup: React.FC = () => {
           </button>
         </div>
 
-        <div className="h-[calc(100vh-8rem)] sm:h-[45vh] overflow-y-auto p-4 space-y-4">
+        <div className="h-[35vh] md:h-[45vh] overflow-y-auto p-4 space-y-4">
           {messages.map((message, index) => (
             <div
               key={index}
@@ -503,9 +484,7 @@ const ChatPopup: React.FC = () => {
 
       <motion.button
         onClick={handleOpen}
-        className={`w-16 h-16 rounded-full bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 border-none cursor-pointer flex justify-center items-center shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden ${
-          isOpen ? "pointer-events-none" : ""
-        }`}
+        className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 border-none cursor-pointer flex justify-center items-center shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
@@ -592,7 +571,7 @@ const additionalQA = [
       "AI encompasses various subfields including machine learning, neural networks, and expert systems. It's used in many applications from voice assistants to autonomous vehicles.",
   },
   {
-    question: "vblaze",
+    question: "What services does V-Blaze offer in VR Development?",
     answer: "V-Blaze offers comprehensive VR development services including:",
     options: [
       "VR App Development",
