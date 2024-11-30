@@ -12,7 +12,7 @@ export const qaDatabase: QA[] = [
     keywords: ["AI", "Machine Learning", "Automation"],
   },
   {
-    question: "Tell me about your VR development services",
+    question: "vr vblaze",
     answer:
       "Our VR development team creates immersive virtual reality experiences, from interactive training simulations to virtual showrooms. We also specialize in VR filter creation for social media platforms and custom VR applications for various industries.",
     keywords: ["VR", "Virtual Reality", "Filters"],
