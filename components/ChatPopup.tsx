@@ -297,22 +297,39 @@ const ChatPopup: React.FC = () => {
         };
         break;
       case "Book a Consultation":
-        window.location.href = "https://vblaze.org/schedule";
-        return;
-      case "Ask Another Question":
         botResponse = {
           type: "bot",
           content:
-            "Hello! I'm Vyba AI, your AI assistant. How can I help you today?",
+            "Great! I'm opening our scheduling page in a new tab for you. Is there anything else I can help you with?",
+          options: initialOptions,
+        };
+        window.open("https://vblaze.org/schedule", "_blank");
+        break;
+      case "Ask Another Question":
+        botResponse = {
+          type: "bot",
+          content: "Sure, I'm here to help. What would you like to know?",
           options: initialOptions,
         };
         break;
       case "UAE":
-        window.location.href = "https://wa.me/+971558291800";
-        return;
+        botResponse = {
+          type: "bot",
+          content:
+            "I'm opening WhatsApp to connect you with our UAE sales team. Is there anything else you need?",
+          options: initialOptions,
+        };
+        window.open("https://wa.me/+971558291800", "_blank");
+        break;
       case "India":
-        window.location.href = "https://wa.me/+918113000155";
-        return;
+        botResponse = {
+          type: "bot",
+          content:
+            "I'm opening WhatsApp to connect you with our India sales team. Can I help you with anything else?",
+          options: initialOptions,
+        };
+        window.open("https://wa.me/+918113000155", "_blank");
+        break;
       default:
         const answer = findAnswer(option.label);
         botResponse = {
@@ -364,105 +381,37 @@ const ChatPopup: React.FC = () => {
   };
 
   return (
-    <div
-      ref={chatRef}
-      className="fixed bottom-6 right-6 flex flex-col items-end z-[1]"
-    >
+    <>
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-[9998]"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
       <div
-        className={`mb-4 bg-white rounded-lg shadow-2xl w-[95vw] md:w-96 max-w-[calc(100vw-2rem)] transition-all duration-300 transform ${
-          isOpen
-            ? "scale-100 opacity-100"
-            : "scale-95 opacity-0 pointer-events-none"
+        ref={chatRef}
+        className={`fixed bottom-6 right-6 flex flex-col items-end z-[9999] ${
+          !isOpen && "pointer-events-none"
         }`}
       >
-        <div className="bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 rounded-t-lg p-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <AnimatedLogo />
-            <div>
-              <h3 className="text-white font-semibold">Vyba AI</h3>
-              <p className="text-white/80 text-sm">AI-Powered Support</p>
-            </div>
-          </div>
-          <button
-            onClick={() => setIsOpen(false)}
-            className="text-white/80 hover:text-white transition-colors"
-          >
-            <svg
-              className="w-6 h-6"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-
-        <div className="h-[35vh] md:h-[45vh] overflow-y-auto p-4 space-y-4">
-          {messages.map((message, index) => (
-            <div
-              key={index}
-              className={`flex ${
-                message.type === "user" ? "justify-end" : "justify-start"
-              }`}
-            >
-              <div
-                className={`max-w-[80%] rounded-lg p-3 ${
-                  message.type === "user"
-                    ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white"
-                    : "bg-gray-100 text-gray-800"
-                }`}
-              >
-                <p>{message.content}</p>
-                {message.options && (
-                  <div className="mt-2 space-y-2">
-                    {message.options.map((option) => (
-                      <button
-                        key={option.id}
-                        onClick={() => handleOptionClick(option)}
-                        className="block w-full text-left px-3 py-2 rounded-md bg-white/10 hover:bg-white/20 transition-colors"
-                      >
-                        {option.label}
-                      </button>
-                    ))}
-                  </div>
-                )}
-                {message.explanation && (
-                  <p className="mt-2 text-sm opacity-80">
-                    {message.explanation}
-                  </p>
-                )}
+        <div
+          className={`mb-4 bg-white rounded-lg shadow-2xl w-[95vw] md:w-96 max-w-[calc(100vw-2rem)] transition-all duration-300 transform ${
+            isOpen
+              ? "scale-100 opacity-100"
+              : "scale-95 opacity-0 pointer-events-none"
+          }`}
+        >
+          <div className="bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 rounded-t-lg p-4 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <AnimatedLogo />
+              <div>
+                <h3 className="text-white font-semibold">Vyba AI</h3>
+                <p className="text-white/80 text-sm">AI-Powered Support</p>
               </div>
             </div>
-          ))}
-
-          {isTyping && (
-            <div className="flex justify-start">
-              <TypingAnimation />
-            </div>
-          )}
-
-          <div ref={messagesEndRef} />
-        </div>
-
-        <div className="p-4 border-t">
-          <RelatedQuestions
-            questions={relatedQuestions}
-            onSelect={handleRelatedQuestionClick}
-          />
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="Type your message..."
-              className="flex-1 px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:border-blue-500"
-            />
             <button
-              onClick={handleSend}
-              className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center text-white hover:shadow-lg transition-all duration-300"
+              onClick={() => setIsOpen(false)}
+              className="text-white/80 hover:text-white transition-colors"
             >
               <svg
                 className="w-6 h-6"
@@ -471,146 +420,169 @@ const ChatPopup: React.FC = () => {
                 stroke="currentColor"
                 strokeWidth="2"
               >
-                <path
-                  d="M5 12h14M12 5l7 7-7 7"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
+                <path d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
-        </div>
-      </div>
 
-      <motion.button
-        onClick={handleOpen}
-        className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 border-none cursor-pointer flex justify-center items-center shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <AnimatePresence mode="wait">
-          {fabAnimationState === "dots" ? (
-            <motion.div
-              key="dots"
-              className="flex space-x-1"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <motion.div
-                className="w-2 h-2 bg-white rounded-full"
-                animate={{ scale: [1, 1.5, 1] }}
-                transition={{
-                  duration: 0.6,
-                  repeat: Infinity,
-                  repeatType: "loop",
-                }}
+          <div className="h-[35vh] md:h-[45vh] overflow-y-auto p-4 space-y-4">
+            {messages.map((message, index) => (
+              <div
+                key={index}
+                className={`flex ${
+                  message.type === "user" ? "justify-end" : "justify-start"
+                }`}
+              >
+                <div
+                  className={`max-w-[80%] rounded-lg p-3 ${
+                    message.type === "user"
+                      ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white"
+                      : "bg-gray-100 text-gray-800"
+                  }`}
+                >
+                  <p>{message.content}</p>
+                  {message.options && (
+                    <div className="mt-2 space-y-2">
+                      {message.options.map((option) => (
+                        <button
+                          key={option.id}
+                          onClick={() => handleOptionClick(option)}
+                          className="block w-full text-left px-3 py-2 rounded-md bg-white/10 hover:bg-white/20 transition-colors"
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                  {message.explanation && (
+                    <p className="mt-2 text-sm opacity-80">
+                      {message.explanation}
+                    </p>
+                  )}
+                </div>
+              </div>
+            ))}
+
+            {isTyping && (
+              <div className="flex justify-start">
+                <TypingAnimation />
+              </div>
+            )}
+
+            <div ref={messagesEndRef} />
+          </div>
+
+          <div className="p-4 border-t">
+            <RelatedQuestions
+              questions={relatedQuestions}
+              onSelect={handleRelatedQuestionClick}
+            />
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Type your message..."
+                className="flex-1 px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:border-blue-500"
               />
+              <button
+                onClick={handleSend}
+                className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center text-white hover:shadow-lg transition-all duration-300"
+              >
+                <svg
+                  className="w-6 h-6"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path
+                    d="M5 12h14M12 5l7 7-7 7"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <motion.button
+          onClick={handleOpen}
+          className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 border-none cursor-pointer flex justify-center items-center shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden pointer-events-auto"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <AnimatePresence mode="wait">
+            {fabAnimationState === "dots" ? (
               <motion.div
-                className="w-2 h-2 bg-white rounded-full"
-                animate={{ scale: [1, 1.5, 1] }}
+                key="dots"
+                className="flex space-x-1"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <motion.div
+                  className="w-2 h-2 bg-white rounded-full"
+                  animate={{ scale: [1, 1.5, 1] }}
+                  transition={{
+                    duration: 0.6,
+                    repeat: Infinity,
+                    repeatType: "loop",
+                  }}
+                />
+                <motion.div
+                  className="w-2 h-2 bg-white rounded-full"
+                  animate={{ scale: [1, 1.5, 1] }}
+                  transition={{
+                    duration: 0.6,
+                    repeat: Infinity,
+                    repeatType: "loop",
+                    delay: 0.2,
+                  }}
+                />
+                <motion.div
+                  className="w-2 h-2 bg-white rounded-full"
+                  animate={{ scale: [1, 1.5, 1] }}
+                  transition={{
+                    duration: 0.6,
+                    repeat: Infinity,
+                    repeatType: "loop",
+                    delay: 0.4,
+                  }}
+                />
+              </motion.div>
+            ) : (
+              <motion.svg
+                key="icon"
+                className="w-8 h-8 text-white"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                initial={{ opacity: 0, rotate: -180, scale: 0.5 }}
+                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                exit={{ opacity: 0, rotate: 180, scale: 0.5 }}
                 transition={{
-                  duration: 0.6,
-                  repeat: Infinity,
-                  repeatType: "loop",
-                  delay: 0.2,
+                  duration: 0.5,
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 10,
                 }}
-              />
-              <motion.div
-                className="w-2 h-2 bg-white rounded-full"
-                animate={{ scale: [1, 1.5, 1] }}
-                transition={{
-                  duration: 0.6,
-                  repeat: Infinity,
-                  repeatType: "loop",
-                  delay: 0.4,
-                }}
-              />
-            </motion.div>
-          ) : (
-            <motion.svg
-              key="icon"
-              className="w-8 h-8 text-white"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              initial={{ opacity: 0, rotate: -180, scale: 0.5 }}
-              animate={{ opacity: 1, rotate: 0, scale: 1 }}
-              exit={{ opacity: 0, rotate: 180, scale: 0.5 }}
-              transition={{
-                duration: 0.5,
-                type: "spring",
-                stiffness: 200,
-                damping: 10,
-              }}
-            >
-              <path d="M12 2C6.48 2 2 6.48 2 12c0 5.52 4.48 10 10 10 1.05 0 2.07-.17 3.02-.47L20 24l-1.53-4.89C20.04 17.23 22 14.79 22 12c0-5.52-4.48-10-10-10zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
-            </motion.svg>
+              >
+                <path d="M12 2C6.48 2 2 6.48 2 12c0 5.52 4.48 10 10 10 1.05 0 2.07-.17 3.02-.47L20 24l-1.53-4.89C20.04 17.23 22 14.79 22 12c0-5.52-4.48-10-10-10zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+              </motion.svg>
+            )}
+          </AnimatePresence>
+          {unreadCount > 0 && (
+            <span className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+              {unreadCount}
+            </span>
           )}
-        </AnimatePresence>
-        {unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
-            {unreadCount}
-          </span>
-        )}
-      </motion.button>
-    </div>
+        </motion.button>
+      </div>
+    </>
   );
 };
 
 export default ChatPopup;
-
-// Add additional questions and answers here
-const additionalQA = [
-  {
-    question: "What is AI?",
-    answer:
-      "AI, or Artificial Intelligence, refers to the simulation of human intelligence in machines that are programmed to think and learn like humans.",
-    options: ["Machine Learning", "Neural Networks", "Expert Systems"],
-    explanation:
-      "AI encompasses various subfields including machine learning, neural networks, and expert systems. It's used in many applications from voice assistants to autonomous vehicles.",
-  },
-  {
-    question: "What services does V-Blaze offer in VR Development?",
-    answer: "V-Blaze offers comprehensive VR development services including:",
-    options: [
-      "VR App Development",
-      "360° VR Experiences",
-      "VR Game Development",
-    ],
-    explanation:
-      "Our VR development team creates immersive experiences for various industries including education, entertainment, and corporate training.",
-  },
-  {
-    question: "Can you explain V-Blaze's approach to UI/UX Design?",
-    answer:
-      "V-Blaze's UI/UX Design approach focuses on creating intuitive and engaging user experiences.",
-    options: ["User Research", "Wireframing", "Prototyping"],
-    explanation:
-      "We start with thorough user research, create wireframes and prototypes, and iterate based on user feedback to ensure the final design meets both user needs and business goals.",
-  },
-  {
-    question: "What app development services does V-Blaze provide?",
-    answer:
-      "V-Blaze offers comprehensive app development services for various platforms.",
-    options: [
-      "iOS Development",
-      "Android Development",
-      "Cross-platform Development",
-    ],
-    explanation:
-      "Our team of experienced developers creates high-quality, scalable applications using the latest technologies and best practices in mobile app development.",
-  },
-  {
-    question: "How can V-Blaze help with digital marketing?",
-    answer:
-      "V-Blaze provides a full suite of digital marketing services to help businesses grow their online presence.",
-    options: [
-      "SEO Optimization",
-      "Social Media Marketing",
-      "Content Marketing",
-    ],
-    explanation:
-      "We develop tailored digital marketing strategies that combine various techniques to increase your brand visibility, engage your target audience, and drive conversions.",
-  },
-];
