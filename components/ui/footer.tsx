@@ -64,14 +64,7 @@ export default function Footer() {
                   Case Studies
                 </a>
               </li>
-              <li>
-                <a
-                  className="text-indigo-200/65 transition hover:text-indigo-500"
-                  href="/coming-soon"
-                >
-                  User policy
-                </a>
-              </li>
+
             </ul>
           </div>
           {/* 2nd block */}
