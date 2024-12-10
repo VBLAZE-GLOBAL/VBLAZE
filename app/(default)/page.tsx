@@ -84,16 +84,6 @@ export default function Home() {
         media="(prefers-color-scheme: dark)"
       />
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-EY32VRFN6P"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-EY32VRFN6P');
-</script>
-
       <PageIllustration />
       <Hero />
       <GoogleDeveloperBadges />
