@@ -83,6 +83,21 @@ export default function Home() {
         content="#121212"
         media="(prefers-color-scheme: dark)"
       />
+      {/* Google Analytics */}
+      <script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-EY32VRFN6P"
+      ></script>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-EY32VRFN6P');
+            `,
+        }}
+      />
 
       <PageIllustration />
       <Hero />
