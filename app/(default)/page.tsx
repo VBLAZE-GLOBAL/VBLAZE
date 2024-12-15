@@ -1,3 +1,4 @@
+"use client";
 import PageIllustration from "@/components/page-illustration";
 import Hero from "@/components/hero-home";
 import Workflows from "@/components/workflows";
@@ -6,6 +7,7 @@ import Cta from "@/components/cta";
 import ChatPopup from "@/components/ChatPopup";
 import ClientLogos from "@/components/ClientLogos";
 import GoogleDeveloperBadges from "@/components/GoogleDeveloperBadges";
+import Snowfall from "react-snowfall";
 export default function Home() {
   return (
     <>
@@ -107,6 +109,7 @@ export default function Home() {
       <Features />
       <Cta />
       <ChatPopup />
+      <Snowfall />
     </>
   );
 }

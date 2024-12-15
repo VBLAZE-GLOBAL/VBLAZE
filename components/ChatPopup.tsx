@@ -365,7 +365,7 @@ const ChatPopup: React.FC = () => {
 
   const generateRelatedQuestions = (content: string): string[] => {
     const questions = [
-      "Can you provide more details?",
+      "X-Mas & New Year Special Offer?",
       "How does this compare to other solutions?",
       "What are the benefits of this approach?",
       "Are there any case studies available?",

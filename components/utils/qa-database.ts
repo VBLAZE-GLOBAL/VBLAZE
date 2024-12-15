@@ -28,6 +28,12 @@ export const qaDatabase: QA[] = [
     keywords: ["hello", "hey", "greetings"],
   },
   {
+    question: "X-Mas & New Year Special Offer?",
+    answer:
+      "We are thrilled to announce our X-Mas & New Year Special Offer designed to add value to your business as we wrap up the year and step into a promising new one.",
+    keywords: ["x-mas", "christmas", "santa"],
+  },
+  {
     question: "How are you?",
     answer:
       "I'm functioning well, thank you for asking! How may I help you with VBLAZE's AI, web, or app development services?",
