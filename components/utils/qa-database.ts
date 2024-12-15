@@ -30,8 +30,14 @@ export const qaDatabase: QA[] = [
   {
     question: "X-Mas & New Year Special Offer?",
     answer:
-      "We are thrilled to announce our X-Mas & New Year Special Offer designed to add value to your business as we wrap up the year and step into a promising new one.",
-    keywords: ["x-mas", "christmas", "santa"],
+      "Season's Greetings from VBLAZE GLOBAL! 🎄✨ We are thrilled to announce our X-Mas & New Year Special Offer designed to add value to your business as we wrap up the year and step into a promising new one. Here's what we’re offering during this festive season: 🎁 Special Festive Discounts: Flat 25% Off on all new software development projects. Exclusive packages for website development, mobile app solutions, and digital transformation services. 🌟 Complimentary Services: Free Consultation to strategize your next big tech initiative with our expert team and 1-Month Free Maintenance for projects initiated during the offer period. 📅 Offer Validity: Start Date: Dec 15, End Date: Jan 25.",
+    keywords: [
+      "x-mas",
+      "new year",
+      "special offer",
+      "discount",
+      "VBLAZE GLOBAL",
+    ],
   },
   {
     question: "How are you?",
