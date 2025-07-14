@@ -20,10 +20,10 @@ interface Message {
 }
 
 const TypingAnimation: React.FC = () => (
-  <div className="flex space-x-2 p-3 bg-gray-100 rounded-lg w-16">
-    <div className="w-2 h-2 bg-gray-400 rounded-full animate-[bounce_1s_infinite_0ms]"></div>
-    <div className="w-2 h-2 bg-gray-400 rounded-full animate-[bounce_1s_infinite_200ms]"></div>
-    <div className="w-2 h-2 bg-gray-400 rounded-full animate-[bounce_1s_infinite_400ms]"></div>
+  <div className="flex space-x-2 p-3 bg-gray-100 dark:bg-gray-800 rounded-lg w-16">
+    <div className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-[bounce_1s_infinite_0ms]"></div>
+    <div className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-[bounce_1s_infinite_200ms]"></div>
+    <div className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-[bounce_1s_infinite_400ms]"></div>
   </div>
 );
 
@@ -36,7 +36,7 @@ const RelatedQuestions: React.FC<{
       <button
         key={index}
         onClick={() => onSelect(question)}
-        className="text-xs bg-blue-100 text-blue-800 px-3 py-1 rounded-full hover:bg-blue-200 transition-colors whitespace-nowrap"
+        className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors whitespace-nowrap"
       >
         {question}
       </button>
@@ -56,7 +56,7 @@ const AnimatedLogo: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center overflow-hidden">
+    <div className="w-10 h-10 rounded-full bg-white/10 dark:bg-black/10 flex items-center justify-center overflow-hidden">
       <AnimatePresence mode="wait">
         {animationState === "dots" ? (
           <motion.div
@@ -68,7 +68,7 @@ const AnimatedLogo: React.FC = () => {
             transition={{ duration: 0.3 }}
           >
             <motion.div
-              className="w-2 h-2 bg-white rounded-full"
+              className="w-2 h-2 bg-white dark:bg-blue-300 rounded-full"
               animate={{ scale: [1, 1.5, 1] }}
               transition={{
                 duration: 0.6,
@@ -77,7 +77,7 @@ const AnimatedLogo: React.FC = () => {
               }}
             />
             <motion.div
-              className="w-2 h-2 bg-white rounded-full"
+              className="w-2 h-2 bg-white dark:bg-blue-300 rounded-full"
               animate={{ scale: [1, 1.5, 1] }}
               transition={{
                 duration: 0.6,
@@ -87,7 +87,7 @@ const AnimatedLogo: React.FC = () => {
               }}
             />
             <motion.div
-              className="w-2 h-2 bg-white rounded-full"
+              className="w-2 h-2 bg-white dark:bg-blue-300 rounded-full"
               animate={{ scale: [1, 1.5, 1] }}
               transition={{
                 duration: 0.6,
@@ -100,7 +100,7 @@ const AnimatedLogo: React.FC = () => {
         ) : (
           <motion.svg
             key="icon"
-            className="w-6 h-6 text-white"
+            className="w-6 h-6 text-white dark:text-blue-300"
             viewBox="0 0 24 24"
             fill="currentColor"
             initial={{ opacity: 0, rotate: -180, scale: 0.5 }}
@@ -167,6 +167,58 @@ async function fetchGeminiFlashResponse(messages: Message[]): Promise<string> {
   } catch (e) {
     return "Sorry, there was an error connecting to Vyba AI. Please try again later.";
   }
+}
+
+// 1. THEME: Update all gradients and color classes to use #524BE7-based gradient
+// 2. MARKDOWN: Use a markdown parser for bold, italic, underline, and URLs
+// 3. PROJECT IMAGES: Show project images if user asks about projects
+// 4. REFERENCES: Show reference URLs if present in Gemini response
+
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+
+// Helper: Detect if message is about projects
+function isProjectQuery(content: string) {
+  const keywords = [
+    'project', 'projects', 'portfolio', 'case study', 'case studies', 'work', 'examples', 'showcase'
+  ];
+  return keywords.some((kw) => content.toLowerCase().includes(kw));
+}
+
+// Helper: Get all project images
+const projectImages = [
+  '/images/projects/p1img1.png',
+  '/images/projects/p1img2.png',
+  '/images/projects/p1img3.png',
+  '/images/projects/error.png',
+];
+
+// Helper: Extract reference URLs from Gemini response
+function extractReferenceUrls(text: string): string[] {
+  // Look for lines like: Reference: https://...
+  const urlRegex = /(https?:\/\/[^\s)]+)(?=[\s\n]|$)/g;
+  const matches = text.match(urlRegex);
+  return matches ? Array.from(new Set(matches)) : [];
+}
+
+// Markdown renderer with custom styles
+function renderStyledContent(content: string) {
+  return (
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      components={{
+        a: (props) => (
+          <a {...props} className="font-bold italic underline text-[#524BE7] hover:text-[#3a36b6] transition-colors" target="_blank" rel="noopener noreferrer" />
+        ),
+        strong: (props) => <strong className="font-bold text-[#524BE7]" {...props} />,
+        em: (props) => <em className="italic text-[#524BE7]" {...props} />,
+        u: (props) => <u className="underline text-[#524BE7]" {...props} />,
+        code: (props) => <code className="bg-[#524BE7]/10 px-1 rounded text-[#524BE7] font-mono" {...props} />,
+      }}
+    >
+      {content}
+    </ReactMarkdown>
+  );
 }
 
 const ChatPopup: React.FC = () => {
@@ -320,7 +372,7 @@ const ChatPopup: React.FC = () => {
         await simulateBotResponse({
           type: "bot",
           content:
-            "Great! I'm opening our scheduling page in a new tab for you. Is there anything else I can help you with?",
+            "Great! I'm opening our scheduling page in a new tab for you. Is there anything else I can help you with?\n\n**_https://vblaze.org/schedule_**",
           options: initialOptions,
         });
         window.open("https://vblaze.org/schedule", "_blank");
@@ -343,7 +395,7 @@ const ChatPopup: React.FC = () => {
         await simulateBotResponse({
           type: "bot",
           content:
-            "I'm opening WhatsApp to connect you with our UAE sales team. Is there anything else you need?",
+            "I'm opening WhatsApp to connect you with our UAE sales team. Is there anything else you need?\n\n**_https://wa.me/+971558291800_**",
           options: initialOptions,
         });
         window.open("https://wa.me/+971558291800", "_blank");
@@ -354,10 +406,33 @@ const ChatPopup: React.FC = () => {
         await simulateBotResponse({
           type: "bot",
           content:
-            "I'm opening WhatsApp to connect you with our India sales team. Can I help you with anything else?",
+            "I'm opening WhatsApp to connect you with our India sales team. Can I help you with anything else?\n\n**_https://wa.me/+918113000155_**",
           options: initialOptions,
         });
         window.open("https://wa.me/+918113000155", "_blank");
+        return;
+      }
+
+      // If project query, show images
+      if (isProjectQuery(inputValue)) {
+        setIsTyping(false);
+        await simulateBotResponse({
+          type: "bot",
+          content: "Here are some of our project showcases:",
+          options: initialOptions,
+          explanation: '',
+        });
+        setMessages((prev) => [
+          ...prev,
+          {
+            type: 'bot',
+            content: '',
+            explanation: '',
+            options: undefined,
+            // Custom: Attach images
+          }
+        ]);
+        setLastActivityTime(Date.now());
         return;
       }
 
@@ -366,6 +441,8 @@ const ChatPopup: React.FC = () => {
 
       setIsTyping(false);
 
+      // Extract references
+      const references = extractReferenceUrls(answer);
       // Suggest options for next steps
       const botResponse: Message = {
         type: "bot",
@@ -375,6 +452,7 @@ const ChatPopup: React.FC = () => {
           { id: 2, label: "Contact Sales" },
           { id: 3, label: "Ask Another Question" },
         ],
+        explanation: references.length > 0 ? 'References: ' + references.map(url => `[${url}](${url})`).join(' | ') : undefined,
       };
 
       await simulateBotResponse(botResponse);
@@ -411,7 +489,7 @@ const ChatPopup: React.FC = () => {
         botResponse = {
           type: "bot",
           content:
-            "Great! I'm opening our scheduling page in a new tab for you. Is there anything else I can help you with?",
+            "Great! I'm opening our scheduling page in a new tab for you. Is there anything else I can help you with?\n\n**_https://vblaze.org/schedule_**",
           options: initialOptions,
         };
         window.open("https://vblaze.org/schedule", "_blank");
@@ -427,7 +505,7 @@ const ChatPopup: React.FC = () => {
         botResponse = {
           type: "bot",
           content:
-            "I'm opening WhatsApp to connect you with our UAE sales team. Is there anything else you need?",
+            "I'm opening WhatsApp to connect you with our UAE sales team. Is there anything else you need?\n\n**_https://wa.me/+971558291800_**",
           options: initialOptions,
         };
         window.open("https://wa.me/+971558291800", "_blank");
@@ -436,7 +514,7 @@ const ChatPopup: React.FC = () => {
         botResponse = {
           type: "bot",
           content:
-            "I'm opening WhatsApp to connect you with our India sales team. Can I help you with anything else?",
+            "I'm opening WhatsApp to connect you with our India sales team. Can I help you with anything else?\n\n**_https://wa.me/+918113000155_**",
           options: initialOptions,
         };
         window.open("https://wa.me/+918113000155", "_blank");
@@ -498,7 +576,7 @@ const ChatPopup: React.FC = () => {
     <>
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-[9998]"
+          className="fixed inset-0 bg-black bg-opacity-50 z-[9998] dark:bg-black/80"
           onClick={() => setIsOpen(false)}
         />
       )}
@@ -509,13 +587,13 @@ const ChatPopup: React.FC = () => {
         }`}
       >
         <div
-          className={`mb-4 bg-white rounded-lg shadow-2xl w-[95vw] md:w-96 max-w-[calc(100vw-2rem)] transition-all duration-300 transform ${
+          className={`mb-4 bg-white dark:bg-gray-900 rounded-lg shadow-2xl w-[95vw] md:w-96 max-w-[calc(100vw-2rem)] transition-all duration-300 transform ${
             isOpen
               ? "scale-100 opacity-100"
               : "scale-95 opacity-0 pointer-events-none"
           }`}
         >
-          <div className="bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 rounded-t-lg p-4 flex items-center justify-between">
+          <div className="bg-gradient-to-r from-[#524BE7] via-[#6C63FF] to-[#524BE7] dark:from-[#524BE7] dark:via-[#6C63FF] dark:to-[#524BE7] rounded-t-lg p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <AnimatedLogo />
               <div>
@@ -548,20 +626,28 @@ const ChatPopup: React.FC = () => {
                 }`}
               >
                 <div
-                  className={`max-w-[80%] rounded-lg p-3 ${
-                    message.type === "user"
-                      ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white"
-                      : "bg-gray-100 text-gray-800"
-                  }`}
+                  className={`max-w-[80%] rounded-lg p-3 ${message.type === "user"
+                    ? "bg-gradient-to-r from-[#524BE7] to-[#6C63FF] text-white"
+                    : "bg-[#F5F6FF] dark:bg-[#23235B] text-[#23235B] dark:text-[#F5F6FF]"}`}
                 >
-                  <p>{message.content}</p>
+                  <div>
+                    {renderStyledContent(message.content)}
+                  </div>
+                  {/* Show project images if this is a project showcase message */}
+                  {isProjectQuery(message.content) && (
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {projectImages.map((src, i) => (
+                        <img key={i} src={src} alt={`Project ${i+1}`} className="w-24 h-16 object-cover rounded shadow border border-[#524BE7]/30" />
+                      ))}
+                    </div>
+                  )}
                   {message.options && (
                     <div className="mt-2 space-y-2">
                       {message.options.map((option) => (
                         <button
                           key={option.id}
                           onClick={() => handleOptionClick(option)}
-                          className="block w-full text-left px-3 py-2 rounded-md bg-white/10 hover:bg-white/20 transition-colors"
+                          className="block w-full text-left px-3 py-2 rounded-md bg-[#524BE7]/10 hover:bg-[#524BE7]/20 text-[#524BE7] dark:bg-[#23235B] dark:hover:bg-[#524BE7]/20 transition-colors"
                         >
                           {option.label}
                         </button>
@@ -569,9 +655,9 @@ const ChatPopup: React.FC = () => {
                     </div>
                   )}
                   {message.explanation && (
-                    <p className="mt-2 text-sm opacity-80">
-                      {message.explanation}
-                    </p>
+                    <div className="mt-2 text-xs opacity-80">
+                      {renderStyledContent(message.explanation)}
+                    </div>
                   )}
                 </div>
               </div>
@@ -586,7 +672,7 @@ const ChatPopup: React.FC = () => {
             <div ref={messagesEndRef} />
           </div>
 
-          <div className="p-4 border-t">
+          <div className="p-4 border-t dark:border-[#23235B] border-[#524BE7]/20">
             <RelatedQuestions
               questions={relatedQuestions}
               onSelect={handleRelatedQuestionClick}
@@ -598,24 +684,14 @@ const ChatPopup: React.FC = () => {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Type your message..."
-                className="flex-1 px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:border-blue-500"
+                className="flex-1 px-4 py-2 rounded-full border border-[#524BE7] focus:outline-none focus:border-[#6C63FF] bg-white dark:bg-[#23235B] text-[#23235B] dark:text-[#F5F6FF]"
               />
               <button
                 onClick={handleSend}
-                className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center text-white hover:shadow-lg transition-all duration-300"
+                className="w-12 h-12 rounded-full bg-gradient-to-r from-[#524BE7] to-[#6C63FF] flex items-center justify-center text-white hover:shadow-lg transition-all duration-300"
               >
-                <svg
-                  className="w-6 h-6"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path
-                    d="M5 12h14M12 5l7 7-7 7"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
+                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
             </div>
@@ -624,7 +700,7 @@ const ChatPopup: React.FC = () => {
 
         <motion.button
           onClick={handleOpen}
-          className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 border-none cursor-pointer flex justify-center items-center shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden pointer-events-auto"
+          className="w-16 h-16 rounded-full bg-gradient-to-r from-[#524BE7] via-[#6C63FF] to-[#524BE7] border-none cursor-pointer flex justify-center items-center shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden pointer-events-auto"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -639,7 +715,7 @@ const ChatPopup: React.FC = () => {
                 transition={{ duration: 0.3 }}
               >
                 <motion.div
-                  className="w-2 h-2 bg-white rounded-full"
+                  className="w-2 h-2 bg-white dark:bg-blue-300 rounded-full"
                   animate={{ scale: [1, 1.5, 1] }}
                   transition={{
                     duration: 0.6,
@@ -648,7 +724,7 @@ const ChatPopup: React.FC = () => {
                   }}
                 />
                 <motion.div
-                  className="w-2 h-2 bg-white rounded-full"
+                  className="w-2 h-2 bg-white dark:bg-blue-300 rounded-full"
                   animate={{ scale: [1, 1.5, 1] }}
                   transition={{
                     duration: 0.6,
@@ -658,7 +734,7 @@ const ChatPopup: React.FC = () => {
                   }}
                 />
                 <motion.div
-                  className="w-2 h-2 bg-white rounded-full"
+                  className="w-2 h-2 bg-white dark:bg-blue-300 rounded-full"
                   animate={{ scale: [1, 1.5, 1] }}
                   transition={{
                     duration: 0.6,
@@ -671,7 +747,7 @@ const ChatPopup: React.FC = () => {
             ) : (
               <motion.svg
                 key="icon"
-                className="w-8 h-8 text-white"
+                className="w-8 h-8 text-white dark:text-blue-300"
                 viewBox="0 0 24 24"
                 fill="currentColor"
                 initial={{ opacity: 0, rotate: -180, scale: 0.5 }}
@@ -689,7 +765,7 @@ const ChatPopup: React.FC = () => {
             )}
           </AnimatePresence>
           {unreadCount > 0 && (
-            <span className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+            <span className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 dark:bg-red-700 rounded-full flex items-center justify-center text-white text-xs font-bold">
               {unreadCount}
             </span>
           )}
