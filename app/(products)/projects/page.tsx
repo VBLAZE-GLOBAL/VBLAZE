@@ -6,6 +6,36 @@ import Link from "next/link";
 
 const projects = [
   {
+    id: 8,
+    name: "Positive Properties",
+    description:
+      "Top Real Estate in Dubai & UAE. Exceptional quality and prompt service for clients in their search for the right property.",
+    image: "/images/client-10.png",
+    link: "/projects/positive-properties",
+    category: "Websites",
+    subcategory: "React JS",
+  },
+  {
+    id: 9,
+    name: "Vision X Nexus",
+    description:
+      "Premium Real Estate in Sharjah & UAE. Experience serene living and explore a wide range of luxury real estate.",
+    image: "/images/client-11.png",
+    link: "/projects/vision-x-nexus",
+    category: "Websites",
+    subcategory: "React JS",
+  },
+  {
+    id: 10,
+    name: "Leaders Fort",
+    description:
+      "Leaders Fort is a trusted name in the UAE, providing innovative solutions and services.",
+    image: "/images/client-12.png",
+    link: "/projects/leaders-fort",
+    category: "Websites",
+    subcategory: "React JS",
+  },
+  {
     id: 1,
     name: "SavvyPool",
     description:
@@ -77,36 +107,6 @@ const projects = [
     link: "/projects/rb",
     category: "Applications",
     subcategory: "Flutter",
-  },
-  {
-    id: 8,
-    name: "Positive Properties",
-    description:
-      "Top Real Estate in Dubai & UAE. Exceptional quality and prompt service for clients in their search for the right property.",
-    image: "/images/client-10.png",
-    link: "/projects/positive-properties",
-    category: "Websites",
-    subcategory: "React JS",
-  },
-  {
-    id: 9,
-    name: "Vision X Nexus",
-    description:
-      "Premium Real Estate in Sharjah & UAE. Experience serene living and explore a wide range of luxury real estate.",
-    image: "/images/client-11.png",
-    link: "/projects/vision-x-nexus",
-    category: "Websites",
-    subcategory: "React JS",
-  },
-  {
-    id: 10,
-    name: "Leaders Fort",
-    description:
-      "Leaders Fort is a trusted name in the UAE, providing innovative solutions and services.",
-    image: "/images/client-12.png",
-    link: "/projects/leaders-fort",
-    category: "Websites",
-    subcategory: "React JS",
   },
 ];
 
