@@ -2,7 +2,10 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { findAnswer } from "@/components/utils/qa-database";
+
+// Gemini Flash 1.5 API
+const GEMINI_API_KEY = "AIzaSyCOm1E-ZUG5eCS-dtDp3K_9j4rmYBNdQ-Q";
+const GEMINI_FLASH_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
 
 interface Option {
   id: number;
@@ -118,6 +121,54 @@ const AnimatedLogo: React.FC = () => {
   );
 };
 
+// Gemini Flash 1.5 API call
+async function fetchGeminiFlashResponse(messages: Message[]): Promise<string> {
+  const systemPrompt = `You are Vyba AI, an intelligent agent for VBlaze Global. Answer as a helpful, knowledgeable, and friendly VBlaze Global representative. Provide clear, concise, and professional responses about VBlaze's services, solutions, and offerings. If the user asks for a consultation or sales, provide the appropriate links.`;
+
+  // Gemini Flash 1.5 expects a "contents" array with role and parts
+  const history = [
+    {
+      role: "user",
+      parts: [{ text: systemPrompt }],
+    },
+    ...messages.map((msg) => ({
+      role: msg.type === "user" ? "user" : "model",
+      parts: [{ text: msg.content }],
+    })),
+  ];
+
+  try {
+    const res = await fetch(GEMINI_FLASH_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        contents: history,
+        generationConfig: {
+          temperature: 0.7,
+          topP: 1,
+          topK: 1,
+          maxOutputTokens: 512,
+        },
+        safetySettings: [
+          { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" },
+          { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
+          { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
+          { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_NONE" },
+        ],
+      }),
+    });
+    const data = await res.json();
+    return (
+      data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() ||
+      "Sorry, I couldn't generate a response at this time."
+    );
+  } catch (e) {
+    return "Sorry, there was an error connecting to Vyba AI. Please try again later.";
+  }
+}
+
 const ChatPopup: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -148,7 +199,7 @@ const ChatPopup: React.FC = () => {
       simulateBotResponse({
         type: "bot",
         content:
-          "Hello! I'm Vyba AI, your AI assistant. How can I help you today?",
+          "Hello! I'm Vyba AI, your AI assistant for VBlaze Global. How can I help you today?",
         options: initialOptions,
       });
     }
@@ -163,7 +214,6 @@ const ChatPopup: React.FC = () => {
 
     const inactivityTimer = setInterval(() => {
       if (Date.now() - lastActivityTime > 60000 && isOpen) {
-        // 1 minute of inactivity
         simulateBotResponse({
           type: "bot",
           content: "Is there anything else I can help you with?",
@@ -182,6 +232,7 @@ const ChatPopup: React.FC = () => {
       clearInterval(inactivityTimer);
       clearInterval(fabAnimation);
     };
+    // eslint-disable-next-line
   }, [isOpen, lastActivityTime]);
 
   useEffect(() => {
@@ -223,6 +274,7 @@ const ChatPopup: React.FC = () => {
     oscillator.stop(audioContext.current.currentTime + 0.2);
   };
 
+  // Simulate bot response (for initial greeting and inactivity)
   const simulateBotResponse = async (response: Message): Promise<void> => {
     if (!isOpen) return;
     setIsTyping(true);
@@ -242,6 +294,7 @@ const ChatPopup: React.FC = () => {
     setLastActivityTime(Date.now());
   };
 
+  // Send user message and get Gemini Flash 1.5 response
   const handleSend = async (): Promise<void> => {
     if (!isOpen) return;
     if (inputValue.trim()) {
@@ -255,7 +308,65 @@ const ChatPopup: React.FC = () => {
       setShowOptions(false);
       playSound("outgoing");
 
-      const answer = findAnswer(inputValue);
+      setIsTyping(true);
+
+      // Compose conversation for Gemini (last 6 messages for context)
+      const conversation = [...messages, userMessage].slice(-6);
+
+      // Special handling for booking/sales
+      const lower = inputValue.toLowerCase();
+      if (lower.includes("book") && lower.includes("consult")) {
+        setIsTyping(false);
+        await simulateBotResponse({
+          type: "bot",
+          content:
+            "Great! I'm opening our scheduling page in a new tab for you. Is there anything else I can help you with?",
+          options: initialOptions,
+        });
+        window.open("https://vblaze.org/schedule", "_blank");
+        return;
+      }
+      if (lower.includes("contact") && lower.includes("sales")) {
+        setIsTyping(false);
+        await simulateBotResponse({
+          type: "bot",
+          content: "Which country are you from?",
+          options: [
+            { id: 1, label: "UAE" },
+            { id: 2, label: "India" },
+          ],
+        });
+        return;
+      }
+      if (lower.includes("uae sales")) {
+        setIsTyping(false);
+        await simulateBotResponse({
+          type: "bot",
+          content:
+            "I'm opening WhatsApp to connect you with our UAE sales team. Is there anything else you need?",
+          options: initialOptions,
+        });
+        window.open("https://wa.me/+971558291800", "_blank");
+        return;
+      }
+      if (lower.includes("india sales")) {
+        setIsTyping(false);
+        await simulateBotResponse({
+          type: "bot",
+          content:
+            "I'm opening WhatsApp to connect you with our India sales team. Can I help you with anything else?",
+          options: initialOptions,
+        });
+        window.open("https://wa.me/+918113000155", "_blank");
+        return;
+      }
+
+      // Get Gemini Flash 1.5 response
+      const answer = await fetchGeminiFlashResponse(conversation);
+
+      setIsTyping(false);
+
+      // Suggest options for next steps
       const botResponse: Message = {
         type: "bot",
         content: answer,
@@ -264,7 +375,6 @@ const ChatPopup: React.FC = () => {
           { id: 2, label: "Contact Sales" },
           { id: 3, label: "Ask Another Question" },
         ],
-        explanation: "It provides more context and details about the topic.",
       };
 
       await simulateBotResponse(botResponse);
@@ -272,6 +382,7 @@ const ChatPopup: React.FC = () => {
     setLastActivityTime(Date.now());
   };
 
+  // Handle option button click
   const handleOptionClick = async (option: Option): Promise<void> => {
     if (!isOpen) return;
     const userMessage: Message = {
@@ -331,7 +442,10 @@ const ChatPopup: React.FC = () => {
         window.open("https://wa.me/+918113000155", "_blank");
         break;
       default:
-        const answer = findAnswer(option.label);
+        setIsTyping(true);
+        const conversation = [...messages, userMessage].slice(-6);
+        const answer = await fetchGeminiFlashResponse(conversation);
+        setIsTyping(false);
         botResponse = {
           type: "bot",
           content: answer,
@@ -340,7 +454,6 @@ const ChatPopup: React.FC = () => {
             { id: 2, label: "Contact Sales" },
             { id: 3, label: "Ask Another Question" },
           ],
-          explanation: "It provides more context and details about the topic.",
         };
     }
 
@@ -364,12 +477,13 @@ const ChatPopup: React.FC = () => {
   };
 
   const generateRelatedQuestions = (content: string): string[] => {
+    // Static related questions for VBlaze Global
     const questions = [
-      "X-Mas & New Year Special Offer?",
-      "How does this compare to other solutions?",
-      "What are the benefits of this approach?",
-      "Are there any case studies available?",
-      "What's the typical timeline for implementation?",
+      "What AI solutions does VBlaze offer?",
+      "How can I book a consultation?",
+      "What industries does VBlaze serve?",
+      "Tell me about VBlaze's VR development.",
+      "How do I contact sales?",
     ];
     return questions.slice(0, 3);
   };

@@ -5,7 +5,7 @@ import FeaturesImage from "@/public/images/features.png";
 
 export default function Features() {
   return (
-    <section className="relative">
+    <section className="relative" data-aos="fade-up">
       <div
         className="pointer-events-none absolute left-1/2 top-0 -z-10 -mt-20 -translate-x-1/2"
         aria-hidden="true"
@@ -58,7 +58,7 @@ export default function Features() {
           </div>
           {/* Items */}
           <div className="mx-auto grid max-w-sm gap-12 sm:max-w-none sm:grid-cols-2 md:gap-x-14 md:gap-y-16 lg:grid-cols-3">
-            <article>
+            <article data-aos="fade-up">
               <svg
                 className="mb-3 fill-indigo-500"
                 xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +79,7 @@ export default function Features() {
                 like OpenAI, Claude Sonnet, and VbAI.
               </p>
             </article>
-            <article>
+            <article data-aos="fade-up">
               <svg
                 className="mb-3 fill-indigo-500"
                 xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +97,7 @@ export default function Features() {
                 MongoDB, Express.js, React.js, Node.js.
               </p>
             </article>
-            <article>
+            <article data-aos="fade-up">
               <svg
                 className="mb-3 fill-indigo-500"
                 xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +118,7 @@ export default function Features() {
                 Livewire) to develop modern, user-friendly web applications.
               </p>
             </article>
-            <article>
+            <article data-aos="fade-up">
               <svg
                 className="mb-3 fill-indigo-500"
                 xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +144,7 @@ export default function Features() {
                 development and clean, pragmatic design.
               </p>
             </article>
-            <article>
+            <article data-aos="fade-up">
               <svg
                 className="mb-3 fill-indigo-500"
                 xmlns="http://www.w3.org/2000/svg"
@@ -165,7 +165,7 @@ export default function Features() {
                 such as Magento, WordPress, and Shopify.
               </p>
             </article>
-            <article>
+            <article data-aos="fade-up">
               <svg
                 className="mb-3 fill-indigo-500"
                 xmlns="http://www.w3.org/2000/svg"
