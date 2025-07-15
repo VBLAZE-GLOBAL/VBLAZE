@@ -4,3 +4,27 @@
 body {
   padding-top: env(safe-area-inset-top);
 }
+.scrollbar-hide {
+  scrollbar-width: thin;
+  scrollbar-color: #524BE7 #e5e7eb; /* thumb, track */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background: #e5e7eb;
+}
+.scrollbar-hide::-webkit-scrollbar-thumb {
+  background: #524BE7;
+  border-radius: 6px;
+}
+.scrollbar-hide::-webkit-scrollbar-track {
+  background: #e5e7eb;
+  border-radius: 6px;
+}
+.scrollbar-true-hide {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE and Edge */
+}
+.scrollbar-true-hide::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Opera */
+}

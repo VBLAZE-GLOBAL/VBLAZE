@@ -27,7 +27,7 @@ export default function Footer() {
               <li>
                 <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  href="/coming-soon"
+                  href="/services"
                 >
                   Services
                 </a>
@@ -35,7 +35,7 @@ export default function Footer() {
               <li>
                 <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  href="/coming-soon"
+                  href="/AI-Integrations"
                 >
                   AI Integrations
                 </a>
@@ -43,15 +43,15 @@ export default function Footer() {
               <li>
                 <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  href="/coming-soon"
+                  href="/Pricing-&-Plans"
                 >
-                  Pricing &amp; Plans
+                  Pricing & Plans
                 </a>
               </li>
               <li>
                 <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  href="https://github.com/VBLAZE-GLOBAL"
+                  href="/Resources"
                 >
                   Resources
                 </a>
@@ -59,7 +59,7 @@ export default function Footer() {
               <li>
                 <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  href="/coming-soon"
+                  href="/Case-Studies"
                 >
                   Case Studies
                 </a>
@@ -74,7 +74,7 @@ export default function Footer() {
               <li>
                 <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  href="#0"
+                  href="/about-us"
                 >
                   About us
                 </a>
@@ -82,15 +82,15 @@ export default function Footer() {
               <li>
                 <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  href="/coming-soon"
+                  href="/Diversity-Inclusion"
                 >
-                  Diversity &amp; Inclusion
+                  Diversity & Inclusion
                 </a>
               </li>
               <li>
                 <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  href="/coming-soon"
+                  href="/Newsroom"
                 >
                   Newsroom
                 </a>
@@ -106,7 +106,7 @@ export default function Footer() {
               <li>
                 <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  href="https://terms.vblaze.org/"
+                  href="/terms"
                 >
                   Terms of service
                 </a>
@@ -150,7 +150,7 @@ export default function Footer() {
               <li>
                 <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  href="/coming-soon"
+                  href="/Sustainability"
                 >
                   Sustainability
                 </a>
@@ -166,7 +166,15 @@ export default function Footer() {
               <li>
                 <a
                   className="text-indigo-200/65 transition hover:text-indigo-500"
-                  href="/coming-soon"
+                  href="/Tutorials"
+                >
+                  Tutorials
+                </a>
+              </li>
+              <li>
+                <a
+                  className="text-indigo-200/65 transition hover:text-indigo-500"
+                  href="/Knowledge-base"
                 >
                   Knowledge base
                 </a>

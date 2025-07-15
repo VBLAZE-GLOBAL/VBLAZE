@@ -31,7 +31,7 @@ const RelatedQuestions: React.FC<{
   questions: string[];
   onSelect: (question: string) => void;
 }> = ({ questions, onSelect }) => (
-  <div className="flex space-x-2 mb-2 overflow-x-auto pb-2">
+  <div className="flex space-x-2 mb-2 overflow-x-auto pb-2 scrollbar-hide">
     {questions.map((question, index) => (
       <button
         key={index}
@@ -617,7 +617,7 @@ const ChatPopup: React.FC = () => {
             </button>
           </div>
 
-          <div className="h-[35vh] md:h-[45vh] overflow-y-auto p-4 space-y-4">
+          <div className="h-[35vh] md:h-[45vh] overflow-y-auto p-4 space-y-4 scrollbar-true-hide">
             {messages.map((message, index) => (
               <div
                 key={index}
