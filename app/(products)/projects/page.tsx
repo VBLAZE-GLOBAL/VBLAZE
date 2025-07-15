@@ -108,6 +108,16 @@ const projects = [
     category: "Applications",
     subcategory: "Flutter",
   },
+  {
+    id: 11,
+    name: "Media Market International",
+    description:
+      "Media Market International is a leading provider of media and marketing solutions, delivering innovative strategies for global clients.",
+    image: "/images/client-13.png",
+    link: "https://www.mediamarketint.com/",
+    category: "Websites",
+    subcategory: "Corporate",
+  },
 ];
 
 export default function ProjectsArchivePage() {
