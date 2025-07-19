@@ -124,14 +124,23 @@ export default function ProjectsArchivePage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedSubcategory, setSelectedSubcategory] = useState("All");
 
-  const filteredProjects = projects.filter((project) => {
-    const matchCategory =
-      selectedCategory === "All" || project.category === selectedCategory;
-    const matchSubcategory =
-      selectedSubcategory === "All" ||
-      project.subcategory === selectedSubcategory;
-    return matchCategory && matchSubcategory;
-  });
+  const filteredProjects = projects
+    .filter((project) => {
+      const matchCategory =
+        selectedCategory === "All" || project.category === selectedCategory;
+      const matchSubcategory =
+        selectedSubcategory === "All" ||
+        project.subcategory === selectedSubcategory;
+      return matchCategory && matchSubcategory;
+    })
+    .filter(
+      (project) =>
+        ![
+          "Vision X Nexus",
+          "Positive Properties",
+          "Leaders Fort"
+        ].includes(project.name)
+    );
 
   return (
     <section>
