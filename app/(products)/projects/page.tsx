@@ -114,10 +114,41 @@ const projects = [
     description:
       "Media Market International is a leading provider of media and marketing solutions, delivering innovative strategies for global clients.",
     image: "/images/client-13.png",
-    link: "https://www.mediamarketint.com/",
+    link: "/projects/rb",
     category: "Websites",
     subcategory: "Corporate",
   },
+  {
+    id: 12,
+    name: "Positive Properties",
+    description:
+      "Top Real Estate in Dubai & UAE. Exceptional quality and prompt service for clients in their search for the right property.",
+    image: "/images/client-10.png",
+    link: "/projects/positive-properties",
+    category: "Websites",
+    subcategory: "Corporate",
+  },
+  {
+    id: 13,
+    name: "Vision X Nexus",
+    description:
+      "Premium Real Estate in Sharjah & UAE. Experience serene living and explore a wide range of luxury real estate.",
+    image: "/images/client-11.png",
+    link: "/projects/vision-x-nexus",
+    category: "Websites",
+    subcategory: "Corporate",
+  },
+  {
+    id: 14,
+    name: "Leaders Fort",
+    description:
+      "Leaders Fort is a trusted name in the UAE, providing innovative solutions and services across sectors.",
+    image: "/images/client-12.png",
+    link: "/projects/leaders-fort",
+    category: "Websites",
+    subcategory: "Corporate",
+  }
+  
 ];
 
 export default function ProjectsArchivePage() {
@@ -133,14 +164,14 @@ export default function ProjectsArchivePage() {
         project.subcategory === selectedSubcategory;
       return matchCategory && matchSubcategory;
     })
-    .filter(
-      (project) =>
-        ![
-          "Vision X Nexus",
-          "Positive Properties",
-          "Leaders Fort"
-        ].includes(project.name)
-    );
+    // .filter(
+    //   (project) =>
+    //     ![
+    //       "Vision X Nexus",
+    //       "Positive Properties",
+    //       "Leaders Fort"
+    //     ].includes(project.name)
+    // );
 
   return (
     <section>

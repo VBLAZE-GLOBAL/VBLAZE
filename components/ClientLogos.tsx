@@ -2,6 +2,9 @@ import Image from "next/image";
 import ClientImg07 from "@/public/images/client-07.png";
 import ClientImg01 from "@/public/images/client-01.png";
 import ClientImg13 from "@/public/images/client-13.png";
+import ClientImg12 from "@/public/images/client-12.png";
+import ClientImg11 from "@/public/images/client-11.png";
+import ClientImg10 from "@/public/images/client-10.png";
 import Spotlight from "@/components/spotlight";
 
 export default function OurClients() {
@@ -60,7 +63,7 @@ export default function OurClients() {
                     </span>
                   </div>
                   <p className="text-indigo-200/65">
-                    Media Market International is a leading provider of media and marketing solutions, delivering innovative strategies for global clients.
+                    Media Market International is a leading provider of media and marketing solutions.
                   </p>
                 </div>
               </div>
@@ -135,6 +138,115 @@ export default function OurClients() {
                   </div>
                   <p className="text-indigo-200/65">
                     An all-in-one platform for tracking perfume metrics and building better habits.
+                  </p>
+                </div>
+              </div>
+            </a>
+                        {/* Leaders Fort */}
+                        <a
+              className="group/card relative h-full overflow-hidden rounded-2xl bg-gray-800 p-px before:pointer-events-none before:absolute before:-left-40 before:-top-40 before:z-10 before:h-80 before:w-80 before:translate-x-[var(--mouse-x)] before:translate-y-[var(--mouse-y)] before:rounded-full before:bg-indigo-500/80 before:opacity-0 before:blur-3xl before:transition-opacity before:duration-500 after:pointer-events-none after:absolute after:-left-48 after:-top-48 after:z-30 after:h-64 after:w-64 after:translate-x-[var(--mouse-x)] after:translate-y-[var(--mouse-y)] after:rounded-full after:bg-indigo-500 after:opacity-0 after:blur-3xl after:transition-opacity after:duration-500 after:hover:opacity-20 before:group-hover:opacity-100"
+              href="/projects/leaders-fort"
+            >
+              <div className="relative z-20 h-full overflow-hidden rounded-[inherit] bg-gray-950 after:absolute after:inset-0 after:bg-gradient-to-br after:from-gray-900/50 after:via-gray-800/25 after:to-gray-900/50">
+                {/* Image */}
+                <div className="relative pt-3 flex justify-center items-center">
+                  <Image
+                    className="inline-flex"
+                    src={ClientImg12}
+                    width={350}
+                    height={288}
+                    alt="Jovoy"
+                  />
+                  {/* Client name on hover */}
+                  <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="text-white text-xl font-semibold">
+                      Leaders Fort
+                    </span>
+                  </div>
+                </div>
+                {/* Content */}
+                <div className="p-6">
+                  <div className="mb-3">
+                    <span className="btn-sm relative rounded-full bg-gray-800/40 px-2.5 py-0.5 text-xs font-normal before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_bottom,theme(colors.gray.700/.15),theme(colors.gray.700/.5))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-gray-800/60">
+                      <span className="bg-gradient-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
+                        Real Estate Platform
+                      </span>
+                    </span>
+                  </div>
+                  <p className="text-indigo-200/65">
+Transforming property management with streamlined tools for agents and buyers alike.                  </p>
+                </div>
+              </div>
+            </a>
+                        {/* Vision X */}
+                        <a
+              className="group/card relative h-full overflow-hidden rounded-2xl bg-gray-800 p-px before:pointer-events-none before:absolute before:-left-40 before:-top-40 before:z-10 before:h-80 before:w-80 before:translate-x-[var(--mouse-x)] before:translate-y-[var(--mouse-y)] before:rounded-full before:bg-indigo-500/80 before:opacity-0 before:blur-3xl before:transition-opacity before:duration-500 after:pointer-events-none after:absolute after:-left-48 after:-top-48 after:z-30 after:h-64 after:w-64 after:translate-x-[var(--mouse-x)] after:translate-y-[var(--mouse-y)] after:rounded-full after:bg-indigo-500 after:opacity-0 after:blur-3xl after:transition-opacity after:duration-500 after:hover:opacity-20 before:group-hover:opacity-100"
+              href="/projects/vision-x-nexus"
+            >
+              <div className="relative z-20 h-full overflow-hidden rounded-[inherit] bg-gray-950 after:absolute after:inset-0 after:bg-gradient-to-br after:from-gray-900/50 after:via-gray-800/25 after:to-gray-900/50">
+                {/* Image */}
+                <div className="relative pt-3 flex justify-center items-center">
+                  <Image
+                    className="inline-flex"
+                    src={ClientImg11}
+                    width={350}
+                    height={288}
+                    alt="Jovoy"
+                  />
+                  {/* Client name on hover */}
+                  <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="text-white text-xl font-semibold">
+                      Vision X
+                    </span>
+                  </div>
+                </div>
+                {/* Content */}
+                <div className="p-6">
+                  <div className="mb-3">
+                    <span className="btn-sm relative rounded-full bg-gray-800/40 px-2.5 py-0.5 text-xs font-normal before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_bottom,theme(colors.gray.700/.15),theme(colors.gray.700/.5))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-gray-800/60">
+                      <span className="bg-gradient-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
+                        Real Estate Metrics
+                      </span>
+                    </span>
+                  </div>
+                  <p className="text-indigo-200/65">
+                  Seamlessly manage listings, leads, and sales with a powerful CRM built for modern realtors.</p>
+                </div>
+              </div>
+            </a>
+                        {/* Positive Properties */}
+                        <a
+              className="group/card relative h-full overflow-hidden rounded-2xl bg-gray-800 p-px before:pointer-events-none before:absolute before:-left-40 before:-top-40 before:z-10 before:h-80 before:w-80 before:translate-x-[var(--mouse-x)] before:translate-y-[var(--mouse-y)] before:rounded-full before:bg-indigo-500/80 before:opacity-0 before:blur-3xl before:transition-opacity before:duration-500 after:pointer-events-none after:absolute after:-left-48 after:-top-48 after:z-30 after:h-64 after:w-64 after:translate-x-[var(--mouse-x)] after:translate-y-[var(--mouse-y)] after:rounded-full after:bg-indigo-500 after:opacity-0 after:blur-3xl after:transition-opacity after:duration-500 after:hover:opacity-20 before:group-hover:opacity-100"
+              href="/projects/positive-properties"
+            >
+              <div className="relative z-20 h-full overflow-hidden rounded-[inherit] bg-gray-950 after:absolute after:inset-0 after:bg-gradient-to-br after:from-gray-900/50 after:via-gray-800/25 after:to-gray-900/50">
+                {/* Image */}
+                <div className="relative pt-3 flex justify-center items-center">
+                  <Image
+                    className="inline-flex"
+                    src={ClientImg10}
+                    width={350}
+                    height={288}
+                    alt="Jovoy"
+                  />
+                  {/* Client name on hover */}
+                  <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="text-white text-xl font-semibold">
+                    Positive Properties
+                    </span>
+                  </div>
+                </div>
+                {/* Content */}
+                <div className="p-6">
+                  <div className="mb-3">
+                    <span className="btn-sm relative rounded-full bg-gray-800/40 px-2.5 py-0.5 text-xs font-normal before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_bottom,theme(colors.gray.700/.15),theme(colors.gray.700/.5))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-gray-800/60">
+                      <span className="bg-gradient-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
+                        Real Estate Series
+                      </span>
+                    </span>
+                  </div>
+                  <p className="text-indigo-200/65">
+                  An intelligent real estate platform that simplifies property discovery and client engagement.
                   </p>
                 </div>
               </div>
